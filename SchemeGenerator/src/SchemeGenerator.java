@@ -1,3 +1,7 @@
+import View.MainScreen;
+
+import javax.swing.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Volodymyr_Kychak
@@ -7,6 +11,11 @@
  */
 public class SchemeGenerator {
     public static void main (String[] args){
-        System.out.print("sdfjkl");
+        SwingUtilities.invokeLater( new Runnable() {
+            @Override
+            public void run() {
+                new MainScreen().show();
+            }
+        });
     }
 }

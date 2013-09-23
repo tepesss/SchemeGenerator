@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SchemeGenerator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SchemeGenerator_jar</output-path>
+    <root id="archive" name="SchemeGenerator.jar">
+      <element id="module-output" name="SchemeGenerator" />
+    </root>
+  </artifact>
+</component>
