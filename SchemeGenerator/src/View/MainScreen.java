@@ -1,6 +1,9 @@
 package View;
 
 import javax.swing.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,12 +13,20 @@ import javax.swing.*;
  * To change this template use File | Settings | File Templates.
  */
 public class MainScreen {
-    public void show(){
-        JFrame jfrm = new JFrame("A simple Swing Aplication");
-        jfrm.setSize(275, 100);
-        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel jLabel = new JLabel("How to create new GUI with Swing?");
-        jfrm.add(jLabel);
-        jfrm.setVisible(true);
+    public static void show(){
+
+        SwingUtilities.invokeLater( new Runnable() {
+            @Override
+            public void run() {
+                ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle", new Locale("ru", "RU"));
+                JFrame jfrm = new JFrame();
+                jfrm.setTitle(messages.getString("appName"));
+                jfrm.setSize(275, 100);
+                jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                JLabel jLabel = new JLabel("How to create new GUI with Swing?");
+                jfrm.add(jLabel);
+                jfrm.setVisible(true);
+            }
+        });
     }
 }
