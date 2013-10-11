@@ -1,10 +1,5 @@
 package View;
 
-import javax.swing.*;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-
 /**
  * Created with IntelliJ IDEA.
  * User: Volodymyr_Kychak
@@ -14,19 +9,20 @@ import java.util.ResourceBundle;
  */
 public class MainScreen {
     public static void show(){
-
-        SwingUtilities.invokeLater( new Runnable() {
-            @Override
-            public void run() {
-                ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle", new Locale("ru", "RU"));
-                JFrame jfrm = new JFrame();
-                jfrm.setTitle(messages.getString("appName"));
-                jfrm.setSize(275, 100);
-                jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                JLabel jLabel = new JLabel("How to create new GUI with Swing?");
-                jfrm.add(jLabel);
-                jfrm.setVisible(true);
-            }
-        });
+//        ResourceBundle messages;
+//        messages = ResourceBundle.getBundle("MessagesBundle");
+//        JFrame jfrm = new JFrame();
+//        jfrm.setTitle(messages.getString("appName"));
+//        jfrm.setSize(275, 100);
+//        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        JLabel jLabel = new JLabel("How to create new GUI with Swing?");
+//        jfrm.add(jLabel);
+//        jfrm.setVisible(true);
+//        SwingUtilities.invokeLater( new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 }
