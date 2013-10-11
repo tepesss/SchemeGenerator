@@ -10,9 +10,8 @@ import java.util.Locale;
  * To change this template use File | Settings | File Templates.
  */
 public class LocaleManager {
-    static public final Locale ENGLISH = new Locale("uk", "UA");
-    static public final Locale UKRAINIAN = Locale.ENGLISH;
+    static public final Locale UKRAINIAN = new Locale("uk", "UA");
+    static public final Locale ENGLISH = Locale.ENGLISH;
     static public final Locale RUSSIAN = new Locale("ru", "RU");
-//    public void localize(Component c){
-//    }
+
 }

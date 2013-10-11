@@ -1,6 +1,9 @@
 package Controller.Utils;
 
-import View.MainScreen;
+import Model.AppContext;
+
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,8 +13,9 @@ import View.MainScreen;
  * To change this template use File | Settings | File Templates.
  */
 public class Utils {
-    private void sdf(){
-        MainScreen.show();
-    }
+   public static ResourceBundle getMessages(){
+       Properties props = new Properties();
+        return ResourceBundle.getBundle("Bundle/Messages/MessagesBundle", AppContext.getInstance().getCurrentLocale());
+   }
 
 }

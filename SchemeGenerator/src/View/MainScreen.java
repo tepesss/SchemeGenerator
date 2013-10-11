@@ -1,5 +1,11 @@
 package View;
 
+import Controller.Utils.Utils;
+
+import javax.swing.*;
+import java.util.ResourceBundle;
+
+
 /**
  * Created with IntelliJ IDEA.
  * User: Volodymyr_Kychak
@@ -9,20 +15,18 @@ package View;
  */
 public class MainScreen {
     public static void show(){
-//        ResourceBundle messages;
-//        messages = ResourceBundle.getBundle("MessagesBundle");
-//        JFrame jfrm = new JFrame();
-//        jfrm.setTitle(messages.getString("appName"));
-//        jfrm.setSize(275, 100);
-//        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        JLabel jLabel = new JLabel("How to create new GUI with Swing?");
-//        jfrm.add(jLabel);
-//        jfrm.setVisible(true);
-//        SwingUtilities.invokeLater( new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
+        final ResourceBundle   bundle = Utils.getMessages();
+        SwingUtilities.invokeLater( new Runnable() {
+            @Override
+            public void run() {
+                JFrame jfrm = new JFrame();
+                jfrm.setTitle(bundle.getString("appName"));
+                jfrm.setSize(275, 100);
+                jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                JLabel jLabel = new JLabel(bundle.getString("generate"));
+                jfrm.add(jLabel);
+                jfrm.setVisible(true);
+            }
+        });
     }
 }

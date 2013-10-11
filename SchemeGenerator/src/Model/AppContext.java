@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.Utils.LocaleManager;
+
 import java.util.Locale;
 
 /**
@@ -14,6 +16,7 @@ public class AppContext {
     private static Locale currentLocale;
 
     public AppContext(){
+        currentLocale = LocaleManager.UKRAINIAN;
     }
 
     public static synchronized AppContext getInstance(){
@@ -23,11 +26,11 @@ public class AppContext {
         return instance;
     }
 
-    public static Locale getCurrentLocale() {
+    public Locale getCurrentLocale() {
         return currentLocale;
     }
 
-    public static void setCurrentLocale(Locale currentLocale) {
+    public void setCurrentLocale(Locale currentLocale) {
         AppContext.currentLocale = currentLocale;
     }
 
