@@ -1,4 +1,4 @@
-import View.MainScreen;
+import Controller.MainScreenController;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +9,6 @@ import View.MainScreen;
  */
 public class SchemeGenerator {
     public static void main(String[] args) {
-        new MainScreen().show();
+        new MainScreenController().start();
     }
 }
