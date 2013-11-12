@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.MainScreenController;
 import Controller.Utils.LocaleManager;
 
 import java.util.Locale;
@@ -13,6 +14,7 @@ import java.util.Locale;
  */
 public class AppContext {
     public static AppContext instance;
+    private static MainScreenController mainScreenController;
     private static Locale currentLocale;
 
     public AppContext(){
@@ -22,6 +24,7 @@ public class AppContext {
     public static synchronized AppContext getInstance(){
         if(instance == null){
             instance = new AppContext();
+            mainScreenController = new MainScreenController();
         }
         return instance;
     }
@@ -32,6 +35,10 @@ public class AppContext {
 
     public void setCurrentLocale(Locale currentLocale) {
         AppContext.currentLocale = currentLocale;
+    }
+
+    public MainScreenController getMainScreenController(){
+         return mainScreenController;
     }
 
 }

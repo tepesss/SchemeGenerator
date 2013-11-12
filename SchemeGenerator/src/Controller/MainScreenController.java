@@ -23,5 +23,8 @@ public class MainScreenController {
             }
         });
     }
+    public void generateScheme(){
+        view.showOutputScreen();
+    }
 
 }

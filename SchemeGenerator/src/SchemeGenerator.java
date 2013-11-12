@@ -1,4 +1,4 @@
-import Controller.MainScreenController;
+import Model.AppContext;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +9,6 @@ import Controller.MainScreenController;
  */
 public class SchemeGenerator {
     public static void main(String[] args) {
-        new MainScreenController().start();
+        AppContext.getInstance().getMainScreenController().start();
     }
 }

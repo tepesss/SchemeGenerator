@@ -5,6 +5,7 @@ import Controller.Utils.Utils;
 import Model.AppContext;
 import View.Components.BaseComponent;
 import View.Components.InputComponent;
+import View.Components.OutputComponent;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -96,5 +97,12 @@ public class MainFrame extends JFrame implements ActionListener{
         menuItemEN.setText(Utils.getMessages().getString("languageEng"));
         menuItemUK.setText(Utils.getMessages().getString("languageUkr"));
         currentComponent.setLabels();
+    }
+
+    public void showOutputScreen(){
+        remove(currentComponent);
+        currentComponent = new OutputComponent();
+        add(currentComponent);
+        repaint();
     }
 }
