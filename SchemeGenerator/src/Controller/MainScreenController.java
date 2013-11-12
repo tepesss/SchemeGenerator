@@ -1,6 +1,8 @@
 package Controller;
 
-import View.MainView;
+import View.MainFrame;
+
+import javax.swing.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,11 +12,16 @@ import View.MainView;
  * To change this template use File | Settings | File Templates.
  */
 public class MainScreenController {
-    private MainView view;
+    private MainFrame view;
 
     public void start() {
-        view = new MainView();
-        view.showContent();
+        view = new MainFrame();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                view.repaint();
+            }
+        });
     }
 
 }
