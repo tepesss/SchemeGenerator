@@ -1,8 +1,11 @@
 package Controller;
 
+import Controller.Utils.LocaleManager;
+import Model.AppContext;
+import Model.InputModel;
+import Model.OutputModel;
+import View.Components.BaseView;
 import View.MainFrame;
-
-import javax.swing.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,20 +14,38 @@ import javax.swing.*;
  * Time: 1:36 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MainScreenController {
+public class MainScreenController  extends BaseController{
     private MainFrame view;
+    private AppContext model;
 
-    public void start() {
-        view = new MainFrame();
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                view.repaint();
-            }
-        });
+    public  MainScreenController (AppContext model){
+        this.model = model;
+        view = new MainFrame(model, this);
     }
+
     public void generateScheme(){
-        view.showOutputScreen();
+        view.showOutputScreen(getOutputScreen());
+    }
+
+    public void changeLocale(Object element){
+        if (element==view.menuItemRU){
+            model.setCurrentLocale(LocaleManager.RUSSIAN);
+        }   else if (element==view.menuItemUK){
+            model.setCurrentLocale(LocaleManager.UKRAINIAN);
+        }else{
+            model.setCurrentLocale(LocaleManager.ENGLISH);
+        }
+    }
+    public BaseView getInputScreen(){
+        InputModel inputModel = new InputModel();
+        InputController inputController =  new InputController(inputModel);
+        return inputController.getView();
+    }
+
+    public BaseView getOutputScreen(){
+        OutputModel outputModel = new OutputModel();
+        OutputController outputController =  new OutputController(outputModel);
+        return outputController.getView();
     }
 
 }

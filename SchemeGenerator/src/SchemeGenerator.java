@@ -1,4 +1,7 @@
+import Controller.MainScreenController;
 import Model.AppContext;
+
+import javax.swing.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +12,13 @@ import Model.AppContext;
  */
 public class SchemeGenerator {
     public static void main(String[] args) {
-        AppContext.getInstance().getMainScreenController().start();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                AppContext model = AppContext.getInstance();
+                MainScreenController controller = new MainScreenController(model);
+            }
+        });
+
     }
 }

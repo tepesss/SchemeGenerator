@@ -1,16 +1,17 @@
 package View;
 
+import Controller.MainScreenController;
 import Controller.Utils.LocaleManager;
 import Controller.Utils.Utils;
 import Model.AppContext;
-import View.Components.BaseComponent;
-import View.Components.InputComponent;
-import View.Components.OutputComponent;
+import View.Components.BaseView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,17 +20,25 @@ import java.util.Locale;
  * Time: 11:58 AM
  * To change this template use File | Settings | File Templates.
  */
-public class MainFrame extends JFrame implements ActionListener{
+public class MainFrame extends JFrame implements ActionListener, Observer {
 
     JMenuBar menuBar;
     JMenu menuFile, subMunulanguage = new JMenu();
-    JCheckBoxMenuItem menuItemRU, menuItemUK, menuItemEN;
-    BaseComponent currentComponent;
+    public JCheckBoxMenuItem menuItemRU, menuItemUK, menuItemEN;
+    BaseView currentComponent;
+    AppContext model;
+    MainScreenController controller;
 
-    @Override
-    protected void frameInit() {
-        super.frameInit();
-        currentComponent = new InputComponent();
+    public MainFrame(AppContext argModel, MainScreenController argController){
+
+        model = argModel;
+        model.addObserver(this);
+        controller = argController;
+        createView();
+    }
+
+    private void createView(){
+        currentComponent = controller.getInputScreen();
         currentComponent.createControls();
         setSize(320, 240);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,7 +50,7 @@ public class MainFrame extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        changeLocale(e.getSource());
+        controller.changeLocale(e.getSource());
     }
 
     private void createMenuBar(){
@@ -63,7 +72,7 @@ public class MainFrame extends JFrame implements ActionListener{
         menuBar.add(menuFile);
     }
 
-    private void selectCurrentLocale(){
+    public void selectCurrentLocale(){
         Locale locale = AppContext.getInstance().getCurrentLocale();
         menuItemUK.setSelected(false);
         menuItemRU.setSelected(false);
@@ -77,19 +86,7 @@ public class MainFrame extends JFrame implements ActionListener{
         }
     }
 
-    private void changeLocale(Object element){
-        if (element==menuItemRU){
-            AppContext.getInstance().setCurrentLocale(LocaleManager.RUSSIAN);
-        }   else if (element==menuItemUK){
-            AppContext.getInstance().setCurrentLocale(LocaleManager.UKRAINIAN);
-        }else{
-            AppContext.getInstance().setCurrentLocale(LocaleManager.ENGLISH);
-        }
-        selectCurrentLocale();
-        setLabels();
-    }
-
-    private void setLabels(){
+    public void setLabels(){
         setTitle(Utils.getMessages().getString("appName"));
         menuFile.setText(Utils.getMessages().getString("file"));
         subMunulanguage.setText(Utils.getMessages().getString("language"));
@@ -99,10 +96,18 @@ public class MainFrame extends JFrame implements ActionListener{
         currentComponent.setLabels();
     }
 
-    public void showOutputScreen(){
+    public void showOutputScreen(BaseView view){
         remove(currentComponent);
-        currentComponent = new OutputComponent();
+        currentComponent = view;
         add(currentComponent);
         repaint();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Locale){
+            selectCurrentLocale();
+            setLabels();
+        }
     }
 }

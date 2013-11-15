@@ -1,6 +1,7 @@
 package View.Components;
 
 import javax.swing.*;
+import java.util.Observer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,7 +10,6 @@ import javax.swing.*;
  * Time: 10:47 AM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class BaseComponent extends JComponent {
-   public abstract void setLabels();
-   public abstract void createControls();
+public abstract class BaseView extends JComponent implements BaseViewInterface, Observer {
+
 }
