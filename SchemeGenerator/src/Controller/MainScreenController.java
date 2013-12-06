@@ -14,37 +14,38 @@ import View.MainFrame;
  * Time: 1:36 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MainScreenController  extends BaseController{
+public class MainScreenController extends BaseController {
     private MainFrame view;
     private AppContext model;
 
-    public  MainScreenController (AppContext model){
+    public MainScreenController(AppContext model) {
         this.model = model;
         view = new MainFrame(model, this);
     }
 
-    public void generateScheme(){
-        view.showOutputScreen(getOutputScreen());
+    public void generateScheme() {
+        view.showScreen(getOutputScreen());
     }
 
-    public void changeLocale(Object element){
-        if (element==view.menuItemRU){
+    public void changeLocale(Object element) {
+        if (element == view.menuItemRU) {
             model.setCurrentLocale(LocaleManager.RUSSIAN);
-        }   else if (element==view.menuItemUK){
+        } else if (element == view.menuItemUK) {
             model.setCurrentLocale(LocaleManager.UKRAINIAN);
-        }else{
+        } else if (element == view.menuItemEN) {
             model.setCurrentLocale(LocaleManager.ENGLISH);
         }
     }
-    public BaseView getInputScreen(){
+
+    public BaseView getInputScreen() {
         InputModel inputModel = new InputModel();
-        InputController inputController =  new InputController(inputModel);
+        InputController inputController = new InputController(inputModel);
         return inputController.getView();
     }
 
-    public BaseView getOutputScreen(){
+    public BaseView getOutputScreen() {
         OutputModel outputModel = new OutputModel();
-        OutputController outputController =  new OutputController(outputModel);
+        OutputController outputController = new OutputController(outputModel);
         return outputController.getView();
     }
 

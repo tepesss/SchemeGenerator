@@ -3,6 +3,8 @@ package View.Components;
 import Controller.OutputController;
 import Model.OutputModel;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -15,8 +17,6 @@ import java.util.Observable;
  * To change this template use File | Settings | File Templates.
  */
 public class OutputView extends BaseView implements ActionListener {
-    private OutputModel model;
-    private OutputController controller;
 
     public OutputView (OutputModel argModel, OutputController argController){
         model = argModel;
@@ -30,7 +30,9 @@ public class OutputView extends BaseView implements ActionListener {
 
     @Override
     public void createControls() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        layout = new GridBagLayout();
+        setLayout(layout);
+        add(new JButton("hklasdjfhkasjhdfkljashd"));
     }
 
     @Override

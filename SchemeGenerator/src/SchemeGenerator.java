@@ -17,8 +17,8 @@ public class SchemeGenerator {
             public void run() {
                 AppContext model = AppContext.getInstance();
                 MainScreenController controller = new MainScreenController(model);
+                model.setMainScreenController(controller);
             }
         });
-
     }
 }

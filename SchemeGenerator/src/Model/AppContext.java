@@ -1,9 +1,7 @@
 package Model;
 
-import Controller.InputController;
 import Controller.MainScreenController;
 import Controller.Utils.LocaleManager;
-import View.Components.BaseView;
 
 import java.util.Locale;
 
@@ -19,8 +17,8 @@ public class AppContext extends BaseModel {
     private static MainScreenController mainScreenController;
     private static Locale currentLocale;
 
-    public static synchronized AppContext getInstance(){
-        if(instance == null){
+    public static synchronized AppContext getInstance() {
+        if (instance == null) {
             instance = new AppContext();
             currentLocale = LocaleManager.UKRAINIAN;
         }
@@ -37,8 +35,12 @@ public class AppContext extends BaseModel {
         notifyObservers(currentLocale);
     }
 
-    public MainScreenController getMainScreenController(){
+    public MainScreenController getMainScreenController() {
         return mainScreenController;
+    }
+
+    public void setMainScreenController(MainScreenController controller) {
+        mainScreenController = controller;
     }
 
 

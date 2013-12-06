@@ -2,7 +2,6 @@ package Controller.Utils;
 
 import Model.AppContext;
 
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
@@ -13,9 +12,8 @@ import java.util.ResourceBundle;
  * To change this template use File | Settings | File Templates.
  */
 public class Utils {
-   public static ResourceBundle getMessages(){
-       Properties props = new Properties();
+    public static ResourceBundle getMessages() {
         return ResourceBundle.getBundle("Bundle/Messages/MessagesBundle", AppContext.getInstance().getCurrentLocale());
-   }
+    }
 
 }
