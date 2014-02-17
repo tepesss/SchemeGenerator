@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?scenebuilder-classpath-element ../../../../lib/jfxtras-labs-2.2-r5.jar?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import jfxtras.labs.scene.control.ListSpinner?>
+<AnchorPane
+        xmlns:fx="http://javafx.com/fxml/1"
+        xmlns="http://javafx.com/javafx/2.2"
+        fx:controller="controller.InputController">
+    <HBox AnchorPane.topAnchor="0.0"
+          spacing="5"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          alignment="TOP_CENTER"
+          GridPane.columnIndex="0"
+          GridPane.rowIndex="1">
+        <children>
+            <ChoiceBox fx:id="truthTableTemplates">
+            </ChoiceBox>
+            <Label
+                    text="%wX"/>
+            <ListSpinner
+                    fx:id="spinnerWx"
+                    prefHeight="25"/>
+            <Label
+                    text="%wY"/>
+            <ListSpinner
+                    fx:id="spinnerWy"
+                    prefHeight="25"/>
+            <Button
+                    fx:id="generateBtn"
+                    prefHeight="25"
+                    mnemonicParsing="false"
+                    text="%generate"/>
+        </children>
+    </HBox>
+    <TableView
+            fx:id="inputTable"
+            AnchorPane.topAnchor="30.0"
+            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+</AnchorPane>
