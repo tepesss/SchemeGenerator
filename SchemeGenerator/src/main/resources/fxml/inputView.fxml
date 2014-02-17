@@ -16,8 +16,6 @@
           GridPane.columnIndex="0"
           GridPane.rowIndex="1">
         <children>
-            <ChoiceBox fx:id="truthTableTemplates">
-            </ChoiceBox>
             <Label
                     text="%wX"/>
             <ListSpinner

@@ -40,8 +40,6 @@ public class InputController extends BaseController {
     @FXML
     private TableView<InputTableRow> inputTable;
     @FXML
-    private ChoiceBox<String> truthTableTemplates;
-    @FXML
     private Button generateBtn;
     @FXML
     private ListSpinner<Integer> spinnerWx, spinnerWy;
@@ -98,56 +96,12 @@ public class InputController extends BaseController {
         generateBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-//                AppContext.getInstance().getMainScreenController().nextScreen();
-                serializeModel();
+                AppContext.getInstance().getMainScreenController().nextScreen();
             }
         });
     }
 
-    private void serializeModel(){
-        long time = Calendar.getInstance().getTimeInMillis();
-        InputModel obj = model;
-        File file = new File(getClass().getResource("/truthTableTemplates/and.sg").getFile());
-        writeToFile(file, obj);
-//        readFromFile(file);
-        System.out.print( "Stream: ");
-        System.out.println(Calendar.getInstance().getTimeInMillis() - time);
 
-    }
-
-    private static void writeToFile(File file, InputModel obj){
-        String so = new Gson().toJson(obj.getInputRows());
-        PrintWriter out = null;
-        try {
-            System.out.println(so);
-            out = new PrintWriter(new BufferedWriter(new FileWriter(
-                    file.getPath(), true)));
-            out.print(so);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (out != null) {
-                out.close();
-            }
-        }
-    }
-    private static void readFromFile(File file){
-        try {
-            FileInputStream fi = new FileInputStream(file);
-            ObjectInputStream si = new ObjectInputStream(fi);
-            InputModel objNew = (InputModel) si.readObject();
-            si.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
 
     private void populateListSpinner(ListSpinner spinner, int first, int last, int value) {
         ObservableList<Integer> itemsList = FXCollections.observableArrayList();
