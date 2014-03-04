@@ -8,7 +8,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 import model.BaseModel;
-import model.EditableCell;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,36 +20,13 @@ import java.util.List;
  * Time: 12:29 PM
  * To change this template use File | Settings | File Templates.
  */
-public class InputModel extends BaseModel implements Serializable{
+public class InputModel extends BaseModel implements Serializable {
 
-    //    private static InputModel instance;
     private ObservableList<InputTableRow> inputRows = FXCollections.observableArrayList();
-    List<TableColumn> tableColumnsList = new ArrayList<TableColumn>();
+    private transient List<TableColumn> tableColumnsList = new ArrayList<TableColumn>();
     private IntegerProperty wxQuantity = new SimpleIntegerProperty(2);
     private IntegerProperty wyQuantity = new SimpleIntegerProperty(2);
-
-    public List<TableColumn> getTableColumnsList() {
-        return tableColumnsList;
-    }
-
-
-
-    public int getWxQuantityVal() {
-        return wxQuantity.get();
-    }
-
-    public IntegerProperty getWxQuantity() {
-        return wxQuantity;
-    }
-
-    public int getWyQuantityVal() {
-        return wyQuantity.get();
-    }
-
-    public IntegerProperty getWyQuantity() {
-        return wyQuantity;
-    }
-
+    private Callback<TableColumn, TableCell> cellFactory = new EditableCellCallback();
     public enum TableColumnsTypes {
         WX("Wx"), WY("Wy");
 
@@ -69,29 +45,44 @@ public class InputModel extends BaseModel implements Serializable{
         }
     }
 
-
-    public ObservableList<InputTableRow> getInputRows() {
-        return inputRows;
+    public List<TableColumn> getTableColumnsList() {
+        return tableColumnsList;
     }
 
-    private Callback<TableColumn, TableCell> cellFactory =
-            new Callback<TableColumn, TableCell>() {
-                public TableCell call(TableColumn p) {
-                    return new EditableCell();
-                }
-            };
-
-    public TableColumn[] getColumns() {
-
-        Callback<TableColumn.CellDataFeatures<ObservableList, Integer>, SimpleIntegerProperty> cellValueFactory = null;
-        createColumns(inputRows.get(0), cellFactory, TableColumnsTypes.WX);
-        createColumns(inputRows.get(0), cellFactory, TableColumnsTypes.WY);
+    public TableColumn[] getColumnsAsArray() {
         TableColumn[] array = new TableColumn[tableColumnsList.size()];
         tableColumnsList.toArray(array);
         return array;
     }
 
-    private void createColumns(InputTableRow row, Callback<TableColumn, TableCell> cellFactory, final TableColumnsTypes colType) {
+    public int getWxQuantityVal() {
+        return wxQuantity.get();
+    }
+
+    public IntegerProperty getWxQuantity() {
+        return wxQuantity;
+    }
+
+    public int getWyQuantityVal() {
+        return wyQuantity.get();
+    }
+
+    public IntegerProperty getWyQuantity() {
+        return wyQuantity;
+    }
+
+
+
+    public ObservableList<InputTableRow> getInputRows() {
+        return inputRows;
+    }
+
+    public void createColumns() {
+        addColumns(inputRows.get(0), cellFactory, TableColumnsTypes.WX);
+        addColumns(inputRows.get(0), cellFactory, TableColumnsTypes.WY);
+    }
+
+    private void addColumns(InputTableRow row, Callback<TableColumn, TableCell> cellFactory, final TableColumnsTypes colType) {
         int size = colType.equals(TableColumnsTypes.WX) ? row.getWxBitSet().size() : row.getWyBitSet().size();
         for (Integer i = 0; i < size; i++) {
             tableColumnsList.add(createColumn(i, colType));
@@ -120,7 +111,7 @@ public class InputModel extends BaseModel implements Serializable{
     public void updateRowQuantity(int oldVal, int newVal) {
         if (oldVal < newVal) {
             int delta = newVal * newVal - oldVal * oldVal;
-            if (oldVal == 1){
+            if (oldVal == 1) {
                 --delta;
             }
             for (int i = 0; i < delta; i++) {
@@ -128,12 +119,13 @@ public class InputModel extends BaseModel implements Serializable{
             }
         } else {
             int delta = oldVal * oldVal - newVal * newVal;
-            if (inputRows.size() - delta == 1){
+            if (inputRows.size() - delta == 1) {
                 --delta;
             }
             inputRows.remove(inputRows.size() - delta, inputRows.size());
         }
     }
+
     public InputTableRow getEmptyRow(int x, int y) {
         InputTableRow row = new InputTableRow();
         for (int i = 0; i < x; i++)
@@ -142,5 +134,4 @@ public class InputModel extends BaseModel implements Serializable{
             row.getWyBitSet().add(new SimpleIntegerProperty(0));
         return row;
     }
-
 }

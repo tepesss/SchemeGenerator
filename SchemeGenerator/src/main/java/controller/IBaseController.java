@@ -10,5 +10,5 @@ import javafx.scene.layout.Pane;
  * To change this template use File | Settings | File Templates.
  */
 public interface IBaseController {
-    Pane getView();
+    void init();
 }

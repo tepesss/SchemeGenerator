@@ -7,7 +7,7 @@ package model;
  * Time: 12:20 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface BaseModeInterface {
+public interface IBaseMode {
 //    void registerObservers();
 //    void removeObservers();
 }

@@ -1,9 +1,13 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import controller.truthTableTemplates.TruthTableTemplateTypes;
+import controller.truthTableTemplates.TruthTableTemplatesManager;
+import controller.truthTableTemplates.serialization.CallbackInstanceCreator;
+import controller.truthTableTemplates.serialization.InputTableRowListAdapter;
+import controller.truthTableTemplates.serialization.IntegerPropertyAdapter;
 import controller.utils.Utils;
-import javafx.beans.*;
-import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -13,18 +17,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import jfxtras.labs.scene.control.ListSpinner;
 import model.AppContext;
 import model.inputModel.InputModel;
 import model.inputModel.InputTableRow;
-import view.components.InputView;
 
-
-import java.io.*;
-import java.util.*;
+import java.util.List;
+import java.util.ResourceBundle;
 
 
 /**
@@ -34,11 +38,12 @@ import java.util.*;
  * Time: 10:35 AM
  * To change this template use File | Settings | File Templates.
  */
-public class InputController extends BaseController {
-
+public class InputController implements IBaseController {
 
     @FXML
     private TableView<InputTableRow> inputTable;
+    @FXML
+    private ChoiceBox<TruthTableTemplateTypes> truthTableChoiceBox;
     @FXML
     private Button generateBtn;
     @FXML
@@ -48,18 +53,17 @@ public class InputController extends BaseController {
     private ResourceBundle bundle;
 
     InputModel model;
-    InputView view;
     int maxSpinnerValue = 10;
     private ChangeListener<Integer> invalidationListener = new ChangeListener<Integer>() {
-
         @Override
-        public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer integer2) {
+        public void changed(ObservableValue<? extends Integer> observableValue, Integer oldInteger, Integer newInteger) {
             ObjectProperty property = (ObjectProperty) observableValue;
+            truthTableChoiceBox.getSelectionModel().select(0);
             if (property.getBean() == spinnerWx) {
-                model.updateRowQuantity(integer, integer2);
-                changeAllRow(integer2 - integer, 0);
+                model.updateRowQuantity(oldInteger, newInteger);
+                changeAllRow(newInteger - oldInteger, 0);
             } else if (property.getBean() == spinnerWy) {
-                changeAllRow(0, integer2 - integer);
+                changeAllRow(0, newInteger - oldInteger);
             }
         }
     };
@@ -68,40 +72,74 @@ public class InputController extends BaseController {
         model = new InputModel();
     }
 
-    public Pane getView() {
-        return view;
-    }
-
+    @Override
     public void init() {
+        populateTruthTableChoiceBox();
         int x = model.getWxQuantityVal();
         int y = model.getWyQuantityVal();
         populateListSpinner(spinnerWx, 1, maxSpinnerValue, model.getWxQuantityVal());
         populateListSpinner(spinnerWy, 1, maxSpinnerValue, model.getWyQuantityVal());
         bindEvents();
-        for (int i = 0; i < x * y; i++) {
-            model.getInputRows().add(model.getEmptyRow(x, y));
+        if (model.getInputRows().size() < 1) {
+            for (int i = 0; i < x * y; i++) {
+                model.getInputRows().add(model.getEmptyRow(x, y));
+            }
         }
         inputTable.setEditable(true);
-        inputTable.getColumns().addAll(model.getColumns());
+        model.getTableColumnsList().clear();
+        model.createColumns();
+        inputTable.getColumns().addAll(model.getColumnsAsArray());
         inputTable.setItems(model.getInputRows());
-        inputTable.setMaxHeight(Double.MAX_VALUE);
-        inputTable.setMaxWidth(Double.MAX_VALUE);
     }
 
-    private void bindEvents(){
+
+
+    ChangeListener choiceBoxChangeListener = new ChangeListener<TruthTableTemplateTypes>() {
+        @Override
+        public void changed(ObservableValue<? extends TruthTableTemplateTypes> observableValue, TruthTableTemplateTypes oldTemplate, TruthTableTemplateTypes newTemplate) {
+            if (newTemplate != null && newTemplate != TruthTableTemplateTypes.NO_TEMPLATE) {
+                clean();
+                model = TruthTableTemplatesManager.getInstance().setTemplate(newTemplate);
+                init();
+            }
+        }
+    };
+
+    private void bindEvents() {
         model.getWxQuantity().bind(spinnerWx.valueProperty());
         model.getWyQuantity().bind(spinnerWy.valueProperty());
         spinnerWx.valueProperty().addListener(invalidationListener);
         spinnerWy.valueProperty().addListener(invalidationListener);
+        truthTableChoiceBox.getSelectionModel().selectedItemProperty().addListener(choiceBoxChangeListener);
         generateBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 AppContext.getInstance().getMainScreenController().nextScreen();
+                //generateTemplateString();
             }
         });
     }
 
+    private void clean() {
+        unBind();
+        inputTable.getColumns().clear();
+    }
 
+    private void unBind() {
+        model.getWxQuantity().unbind();
+        model.getWyQuantity().unbind();
+        spinnerWx.valueProperty().removeListener(invalidationListener);
+        spinnerWy.valueProperty().removeListener(invalidationListener);
+    }
+
+    private void populateTruthTableChoiceBox() {
+        if (truthTableChoiceBox.getItems().size() < 1) {
+            ObservableList<TruthTableTemplateTypes> list = FXCollections.observableArrayList();
+            list.addAll(TruthTableTemplateTypes.NO_TEMPLATE, TruthTableTemplateTypes.AND, TruthTableTemplateTypes.NOT, TruthTableTemplateTypes.OR);
+            truthTableChoiceBox.setItems(list);
+            truthTableChoiceBox.getSelectionModel().select(0);
+        }
+    }
 
     private void populateListSpinner(ListSpinner spinner, int first, int last, int value) {
         ObservableList<Integer> itemsList = FXCollections.observableArrayList();
@@ -123,11 +161,11 @@ public class InputController extends BaseController {
                     row.getWxBitSet().remove(row.getWxBitSet().removeLast());
                 }
                 inputTable.getColumns().remove(model.getInputRows().get(0).getWxBitSet().size());
-            }else if(deltaX >0){
+            } else if (deltaX > 0) {
                 for (InputTableRow row : model.getInputRows()) {
                     row.getWxBitSet().addLast(new SimpleIntegerProperty(0));
                 }
-                inputTable.getColumns().add(model.getWxQuantityVal()-1, model.createColumn(model.getWxQuantityVal()-1, InputModel.TableColumnsTypes.WX));
+                inputTable.getColumns().add(model.getWxQuantityVal() - 1, model.createColumn(model.getWxQuantityVal() - 1, InputModel.TableColumnsTypes.WX));
             }
         } else if (deltaY != 0) {
             if (deltaY < 0) {
@@ -139,11 +177,18 @@ public class InputController extends BaseController {
                 for (InputTableRow row : model.getInputRows()) {
                     row.getWyBitSet().addLast(new SimpleIntegerProperty(0));
                 }
-                inputTable.getColumns().add(model.createColumn(model.getWyQuantityVal()-1, InputModel.TableColumnsTypes.WY));
+                inputTable.getColumns().add(model.createColumn(model.getWyQuantityVal() - 1, InputModel.TableColumnsTypes.WY));
             }
         }
     }
 
-
-
+    private void generateTemplateString() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(IntegerProperty.class, new IntegerPropertyAdapter());
+        builder.registerTypeAdapter(ObservableList.class, new InputTableRowListAdapter());
+        builder.registerTypeAdapter(javafx.util.Callback.class, new CallbackInstanceCreator());
+        Gson gson = builder.create();
+        String modelS = gson.toJson(model, InputModel.class);
+        System.out.println(modelS);
+    }
 }

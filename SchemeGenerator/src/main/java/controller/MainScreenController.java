@@ -16,13 +16,11 @@ import java.io.IOException;
  * Time: 1:36 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MainScreenController extends BaseController {
-    private BorderPane view;
+public class MainScreenController implements IBaseController {
     private AppContext model;
 
     public MainScreenController(AppContext model) {
         this.model = model;
-        view = ((BorderPane) model.getRootPane());
         setCurrentScreen(getInputScreen());
     }
 
@@ -35,12 +33,7 @@ public class MainScreenController extends BaseController {
     }
 
     @Override
-    public Pane getView() {
-        return view;
-    }
-
-    public Pane getInputScreen() {
-        return loadPaneFXML("/fxml/InputView.fxml");
+    public void init() {
     }
 
     public Pane loadPaneFXML(String fxmlPath) {
@@ -49,7 +42,7 @@ public class MainScreenController extends BaseController {
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(Utils.getMessages());
             pane = (Pane) loader.load(getClass().getResource(fxmlPath).openStream());
-            InputController controller = loader.getController();
+            IBaseController controller = loader.getController();
             controller.init();
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,10 +50,12 @@ public class MainScreenController extends BaseController {
         return pane;
     }
 
+    public Pane getInputScreen() {
+        return loadPaneFXML("/fxml/inputView.fxml");
+    }
+
     public Pane getOutputScreen() {
-        OutputModel outputModel = new OutputModel();
-        OutputController outputController = new OutputController(outputModel);
-        return outputController.getView();
+        return loadPaneFXML("/fxml/outputView.fxml");
     }
 
 }

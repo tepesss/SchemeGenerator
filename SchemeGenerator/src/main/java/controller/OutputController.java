@@ -1,8 +1,10 @@
 package controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import model.OutputModel;
-import view.components.BaseView;
-import view.components.OutputView;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,16 +13,16 @@ import view.components.OutputView;
  * Time: 11:57 AM
  * To change this template use File | Settings | File Templates.
  */
-public class OutputController extends BaseController{
+public class OutputController implements IBaseController{
     private OutputModel model;
-    private BaseView view;
-    public OutputController(OutputModel argModel){
-        model = argModel;
-        view = new OutputView(model, this);
-    }
+    @FXML
+    private Canvas schemeCanvas;
 
-    public BaseView getView() {
-        return view;
+    @Override
+    public void init() {
+        GraphicsContext gc = schemeCanvas.getGraphicsContext2D();
+        gc.setFill(Color.BLUE);
+        gc.fillRect(75,75,100,100);
     }
 
 }

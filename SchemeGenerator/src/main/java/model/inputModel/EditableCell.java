@@ -1,4 +1,4 @@
-package model;
+package model.inputModel;
 
 import javafx.application.Application;
 import javafx.beans.property.ObjectProperty;
