@@ -22,14 +22,14 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import jfxtras.labs.scene.control.ListSpinner;
+
+import jfxtras.scene.control.ListSpinner;
 import model.AppContext;
 import model.inputModel.InputModel;
 import model.inputModel.InputTableRow;
 
 import java.util.List;
 import java.util.ResourceBundle;
-
 
 /**
  * Created with IntelliJ IDEA.
@@ -92,8 +92,6 @@ public class InputController implements IBaseController {
         inputTable.setItems(model.getInputRows());
     }
 
-
-
     ChangeListener choiceBoxChangeListener = new ChangeListener<TruthTableTemplateTypes>() {
         @Override
         public void changed(ObservableValue<? extends TruthTableTemplateTypes> observableValue, TruthTableTemplateTypes oldTemplate, TruthTableTemplateTypes newTemplate) {
@@ -148,8 +146,11 @@ public class InputController implements IBaseController {
         valuesList.toArray(array);
         itemsList.addAll(array);
         spinner.setItems(itemsList);
-        spinner.withArrowPosition(ListSpinner.ArrowPosition.SPLIT);
-        spinner.withArrowDirection(ListSpinner.ArrowDirection.HORIZONTAL);
+
+
+
+//        spinner.withArrowPosition(ListSpinner.ArrowPosition.SPLIT);
+//        spinner.withArrowDirection(ListSpinner.ArrowDirection.HORIZONTAL);
         spinner.setValue(value);
         spinner.requestLayout();
     }
@@ -158,24 +159,24 @@ public class InputController implements IBaseController {
         if (deltaX != 0) {
             if (deltaX < 0) {
                 for (InputTableRow row : model.getInputRows()) {
-                    row.getWxBitSet().remove(row.getWxBitSet().removeLast());
+                    row.getWxList().remove(row.getWxList().removeLast());
                 }
-                inputTable.getColumns().remove(model.getInputRows().get(0).getWxBitSet().size());
+                inputTable.getColumns().remove(model.getInputRows().get(0).getWxList().size());
             } else if (deltaX > 0) {
                 for (InputTableRow row : model.getInputRows()) {
-                    row.getWxBitSet().addLast(new SimpleIntegerProperty(0));
+                    row.getWxList().addLast(new SimpleIntegerProperty(0));
                 }
                 inputTable.getColumns().add(model.getWxQuantityVal() - 1, model.createColumn(model.getWxQuantityVal() - 1, InputModel.TableColumnsTypes.WX));
             }
         } else if (deltaY != 0) {
             if (deltaY < 0) {
                 for (InputTableRow row : model.getInputRows()) {
-                    row.getWyBitSet().remove(row.getWyBitSet().removeLast());
+                    row.getWyList().remove(row.getWyList().removeLast());
                 }
                 inputTable.getColumns().remove(inputTable.getColumns().size() - 1);
             } else if (deltaY > 0) {
                 for (InputTableRow row : model.getInputRows()) {
-                    row.getWyBitSet().addLast(new SimpleIntegerProperty(0));
+                    row.getWyList().addLast(new SimpleIntegerProperty(0));
                 }
                 inputTable.getColumns().add(model.createColumn(model.getWyQuantityVal() - 1, InputModel.TableColumnsTypes.WY));
             }

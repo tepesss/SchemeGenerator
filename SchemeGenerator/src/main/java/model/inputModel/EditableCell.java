@@ -1,34 +1,13 @@
 package model.inputModel;
 
-import javafx.application.Application;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import controller.truthTableTemplates.TruthTableTemplateTypes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.event.*;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-import javafx.util.Callback;
-import model.inputModel.InputModel;
-import model.inputModel.InputTableRow;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Volodymyr_Kychak on 1/20/14.
@@ -103,11 +82,12 @@ public class EditableCell extends TableCell<InputTableRow, Integer> {
                 }
             }
         };
-
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue)
+                if (!newValue) {
                     commitEdit(Integer.parseInt(textField.getText()));
+                    resetChoiceBox();
+                }
             }
         });
 
@@ -116,6 +96,7 @@ public class EditableCell extends TableCell<InputTableRow, Integer> {
             public void handle(KeyEvent t) {
                 if (t.getCode() == KeyCode.ENTER) {
                     commitEdit(Integer.parseInt(textField.getText()));
+                    resetChoiceBox();
                 } else if (t.getCode() == KeyCode.ESCAPE) {
                     cancelEdit();
                 }
@@ -125,5 +106,12 @@ public class EditableCell extends TableCell<InputTableRow, Integer> {
 
     private String getString() {
         return getItem() == null ? "" : getItem().toString();
+    }
+
+    private void resetChoiceBox() {
+        ChoiceBox<TruthTableTemplateTypes> box = (ChoiceBox<TruthTableTemplateTypes>) getScene().lookup("#truthTableChoiceBox");
+        if (box != null && box.getSelectionModel().getSelectedIndex() != 0) {
+            box.getSelectionModel().select(0);
+        }
     }
 }

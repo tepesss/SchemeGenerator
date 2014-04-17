@@ -21,8 +21,8 @@ public class OutputController implements IBaseController{
     @Override
     public void init() {
         GraphicsContext gc = schemeCanvas.getGraphicsContext2D();
-        gc.setFill(Color.BLUE);
-        gc.fillRect(75,75,100,100);
+        gc.setFill(Color.AQUA);
+        gc.fillRect(0, 0, schemeCanvas.getWidth(), schemeCanvas.getHeight());
     }
 
 }

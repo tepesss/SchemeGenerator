@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane layoutX="0.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"/>
+<BorderPane
+    xmlns:fx="http://javafx.com/fxml/1"
+    layoutX="0.0"
+    minHeight="500"
+    minWidth="500"
+    xmlns="http://javafx.com/javafx/2.2"/>

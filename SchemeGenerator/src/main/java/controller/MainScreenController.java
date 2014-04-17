@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import model.AppContext;
-import model.OutputModel;
 
 import java.io.IOException;
 
@@ -24,11 +23,11 @@ public class MainScreenController implements IBaseController {
         setCurrentScreen(getInputScreen());
     }
 
-    private void setCurrentScreen(Pane paneToSet){
+    private void setCurrentScreen(Pane paneToSet) {
         ((BorderPane) model.getRootPane()).setCenter(paneToSet);
     }
 
-    public void nextScreen(){
+    public void nextScreen() {
         setCurrentScreen(getOutputScreen());
     }
 
@@ -57,5 +56,4 @@ public class MainScreenController implements IBaseController {
     public Pane getOutputScreen() {
         return loadPaneFXML("/fxml/outputView.fxml");
     }
-
 }

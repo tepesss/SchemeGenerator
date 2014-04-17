@@ -17,7 +17,6 @@ public class AppContext extends BaseModel {
     private static AppContext instance;
     private static MainScreenController mainScreenController;
     private static Locale currentLocale;
-
     private Pane RootPane;
 
     public static synchronized AppContext getInstance() {

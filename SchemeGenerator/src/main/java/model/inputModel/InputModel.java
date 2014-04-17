@@ -27,6 +27,7 @@ public class InputModel extends BaseModel implements Serializable {
     private IntegerProperty wxQuantity = new SimpleIntegerProperty(2);
     private IntegerProperty wyQuantity = new SimpleIntegerProperty(2);
     private Callback<TableColumn, TableCell> cellFactory = new EditableCellCallback();
+
     public enum TableColumnsTypes {
         WX("Wx"), WY("Wy");
 
@@ -71,8 +72,6 @@ public class InputModel extends BaseModel implements Serializable {
         return wyQuantity;
     }
 
-
-
     public ObservableList<InputTableRow> getInputRows() {
         return inputRows;
     }
@@ -83,7 +82,7 @@ public class InputModel extends BaseModel implements Serializable {
     }
 
     private void addColumns(InputTableRow row, Callback<TableColumn, TableCell> cellFactory, final TableColumnsTypes colType) {
-        int size = colType.equals(TableColumnsTypes.WX) ? row.getWxBitSet().size() : row.getWyBitSet().size();
+        int size = colType.equals(TableColumnsTypes.WX) ? row.getWxList().size() : row.getWyList().size();
         for (Integer i = 0; i < size; i++) {
             tableColumnsList.add(createColumn(i, colType));
         }
@@ -92,15 +91,12 @@ public class InputModel extends BaseModel implements Serializable {
     public TableColumn createColumn(int i, final TableColumnsTypes colType) {
         TableColumn col = new TableColumn(colType.name + i);
         final int j = i;
-        col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, Integer>, IntegerProperty>() {
-            @Override
-            public IntegerProperty call(TableColumn.CellDataFeatures<ObservableList, Integer> param) {
-                InputTableRow someRow = (InputTableRow) param.getValue();
-                if (colType.equals(TableColumnsTypes.WX)) {
-                    return someRow.getWxBitSet().size() > j ? someRow.getWxBitSet().get(j) : null;
-                } else {
-                    return someRow.getWyBitSet().size() > j ? someRow.getWyBitSet().get(j) : null;
-                }
+        col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, Integer>, IntegerProperty>) (param) -> {
+            InputTableRow someRow = (InputTableRow) param.getValue();
+            if (colType.equals(TableColumnsTypes.WX)) {
+                return someRow.getWxList().size() > j ? someRow.getWxList().get(j) : null;
+            } else {
+                return someRow.getWyList().size() > j ? someRow.getWyList().get(j) : null;
             }
         });
         col.setCellFactory(cellFactory);
@@ -115,7 +111,7 @@ public class InputModel extends BaseModel implements Serializable {
                 --delta;
             }
             for (int i = 0; i < delta; i++) {
-                inputRows.add(getEmptyRow(newVal, inputRows.get(0).getWyBitSet().size()));
+                inputRows.add(getEmptyRow(newVal, inputRows.get(0).getWyList().size()));
             }
         } else {
             int delta = oldVal * oldVal - newVal * newVal;
@@ -129,9 +125,9 @@ public class InputModel extends BaseModel implements Serializable {
     public InputTableRow getEmptyRow(int x, int y) {
         InputTableRow row = new InputTableRow();
         for (int i = 0; i < x; i++)
-            row.getWxBitSet().add(new SimpleIntegerProperty(0));
+            row.getWxList().add(new SimpleIntegerProperty(0));
         for (int i = 0; i < y; i++)
-            row.getWyBitSet().add(new SimpleIntegerProperty(0));
+            row.getWyList().add(new SimpleIntegerProperty(0));
         return row;
     }
 }
