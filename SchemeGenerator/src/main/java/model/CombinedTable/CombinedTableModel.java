@@ -1,6 +1,5 @@
-package model.CombinedTable;
+package model.combinedTable;
 
-import javafx.beans.property.IntegerProperty;
 import model.inputModel.InputTableRow;
 
 import java.util.LinkedList;

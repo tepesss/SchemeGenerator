@@ -1,4 +1,4 @@
-package model.CombinedTable;
+package model.combinedTable;
 
 import javafx.beans.property.IntegerProperty;
 
