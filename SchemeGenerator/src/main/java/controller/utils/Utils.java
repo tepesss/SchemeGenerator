@@ -1,5 +1,6 @@
 package controller.utils;
 
+import controller.truthTableTemplates.serialization.IntegerPropertyAdapter;
 import model.AppContext;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class Utils {
         return ResourceBundle.getBundle(name, AppContext.getInstance().getCurrentLocale());
     }
     public static List<Integer> createIntList(int first, int last){
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<Integer>();
 
         for (int i = first; i <= last; i++ ){
             list.add(i);
