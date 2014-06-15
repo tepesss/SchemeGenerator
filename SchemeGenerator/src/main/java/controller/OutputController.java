@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import model.AppContext;
 import model.OutputModel;
 
 /**
@@ -18,8 +19,13 @@ public class OutputController implements IBaseController{
     @FXML
     private Canvas schemeCanvas;
 
+
     @Override
     public void init() {
+        /*
+        model = (OutputModel) AppContext.getInstance().getModels().get(model.getClass().getName());
+        System.out.println(model);
+        */
         GraphicsContext gc = schemeCanvas.getGraphicsContext2D();
         gc.setFill(Color.AQUA);
         gc.fillRect(0, 0, schemeCanvas.getWidth(), schemeCanvas.getHeight());

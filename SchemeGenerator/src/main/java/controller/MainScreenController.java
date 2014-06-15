@@ -54,6 +54,8 @@ public class MainScreenController implements IBaseController {
     }
 
     public Pane getOutputScreen() {
+        SchemeGeneratorEngine engine = new SchemeGeneratorEngine();
+        model.addModel(engine.generateOutputModel());
         return loadPaneFXML("/fxml/outputView.fxml");
     }
 }

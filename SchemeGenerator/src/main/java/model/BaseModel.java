@@ -9,6 +9,6 @@ import java.util.Observable;
  * Time: 12:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BaseModel extends Observable implements IBaseMode {
+public class BaseModel extends Observable implements IBaseModel {
 
 }

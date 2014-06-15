@@ -4,7 +4,7 @@ import controller.MainScreenController;
 import controller.utils.LocaleManager;
 import javafx.scene.layout.Pane;
 
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +18,8 @@ public class AppContext extends BaseModel {
     private static MainScreenController mainScreenController;
     private static Locale currentLocale;
     private Pane RootPane;
+
+    private Map<String, IBaseModel> models = new HashMap<>();
 
     public static synchronized AppContext getInstance() {
         if (instance == null) {
@@ -52,6 +54,12 @@ public class AppContext extends BaseModel {
 
     public void setMainScreenController(MainScreenController controller) {
         mainScreenController = controller;
+    }
+    public void addModel(IBaseModel model){
+        models.put(model.getClass().getName(), model);
+    }
+    public Map<String, IBaseModel> getModels(){
+        return models;
     }
 
 
