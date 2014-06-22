@@ -19,7 +19,7 @@ public class SchemeGenerator extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/root.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/rootView.fxml"));
         this.root = (Pane) loader.load();
         createAppContext();
         Scene scene = new Scene(root);
