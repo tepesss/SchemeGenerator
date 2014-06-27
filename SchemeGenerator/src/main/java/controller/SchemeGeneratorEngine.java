@@ -3,13 +3,15 @@ package controller;
 import model.AppContext;
 import model.OutputModel;
 import model.combinedTable.CombinedTableModel;
+import model.correspondenceTables.CorrespondenceTablesModel;
+import model.equationModel.OperatorEquationModel;
 import model.inputModel.InputModel;
 import model.inputModel.InputTableRow;
 
 import java.util.List;
 
 /**
- * Created by Admin on 14.06.2014.
+ * Created by Volodymyr_Kychak on 14.06.2014.
  */
 public class SchemeGeneratorEngine {
     public OutputModel generateOutputModel(){
@@ -20,12 +22,15 @@ public class SchemeGeneratorEngine {
     }
 
     private void buildOperatorDescription(){
-        buildCorrespondenceTables();
+        CorrespondenceTablesModel correspondenceTablesModel =  buildCorrespondenceTables();
+        OperatorEquationModel operatorEquationModel = new OperatorEquationModel(correspondenceTablesModel);
     }
-    private void buildCorrespondenceTables(){
-        final CombinedTableModel combinedTableModel = buildCombinedTable();
 
+    private CorrespondenceTablesModel buildCorrespondenceTables(){
+        final CombinedTableModel combinedTableModel = buildCombinedTable();
+        return new CorrespondenceTablesModel(combinedTableModel);
     }
+
     private CombinedTableModel buildCombinedTable(){
         final InputModel inputModel;
         inputModel = (InputModel)AppContext.getInstance().getModels().get(InputModel.class.getName());

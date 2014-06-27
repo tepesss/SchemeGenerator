@@ -43,9 +43,9 @@ public class CombinedTableModelRow {
         return delta;
     }
 
-    public void setCListByDeltaSet(LinkedHashSet<CellsCalculatedValue> deltaSet){
+    public void setCListByDeltaList(LinkedList<CellsCalculatedValue> deltaList){
 
-        for(CellsCalculatedValue deltaValue  : deltaSet){
+        for(CellsCalculatedValue deltaValue  : deltaList){
             if (deltaValue.equals(delta)){
                 cList.add(new SimpleIntegerProperty(1));
             }else{
