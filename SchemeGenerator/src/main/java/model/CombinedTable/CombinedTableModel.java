@@ -7,7 +7,7 @@ import java.util.*;
 
 public class CombinedTableModel {
     private List<CombinedTableModelRow> combinedTableModelRows = new LinkedList<CombinedTableModelRow>();
-
+    private LinkedHashSet<CellsCalculatedValue> deltaSet = new LinkedHashSet<>();
     public CombinedTableModel(List<InputTableRow> inputRows) {
         List<CellsCalculatedValue> deltaList = new LinkedList<>();
         for (InputTableRow row : inputRows) {
@@ -15,7 +15,6 @@ public class CombinedTableModel {
             deltaList.add(combinedRow.getDelta());
             combinedTableModelRows.add(combinedRow);
         }
-        LinkedHashSet<CellsCalculatedValue> deltaSet = new LinkedHashSet<>();
         for (CellsCalculatedValue value : deltaList) {
             if (!containsValue(deltaSet, value)) {
                 deltaSet.add(value);
@@ -24,7 +23,14 @@ public class CombinedTableModel {
         for (CombinedTableModelRow combinedRow : combinedTableModelRows) {
             combinedRow.setCListByDeltaSet(deltaSet);
         }
-        System.out.println(combinedTableModelRows);
+    }
+
+    public LinkedHashSet<CellsCalculatedValue> getDeltaSet() {
+        return deltaSet;
+    }
+
+    public List<CombinedTableModelRow> getCombinedTableModelRows() {
+        return combinedTableModelRows;
     }
 
     boolean containsValue(Set<CellsCalculatedValue> set, CellsCalculatedValue value) {
