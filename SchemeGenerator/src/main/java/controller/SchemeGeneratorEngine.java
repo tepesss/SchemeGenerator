@@ -3,6 +3,7 @@ package controller;
 import model.AppContext;
 import model.OutputModel;
 import model.combinedTable.CombinedTableModel;
+import model.combinedTable.CombinedTablesModel;
 import model.correspondenceTables.CorrespondenceTablesModel;
 import model.equationModel.OperatorEquationModel;
 import model.inputModel.InputModel;
@@ -27,14 +28,14 @@ public class SchemeGeneratorEngine {
     }
 
     private CorrespondenceTablesModel buildCorrespondenceTables(){
-        final CombinedTableModel combinedTableModel = buildCombinedTable();
+        final CombinedTablesModel combinedTableModel = buildCombinedTable();
         return new CorrespondenceTablesModel(combinedTableModel);
     }
 
-    private CombinedTableModel buildCombinedTable(){
+    private CombinedTablesModel buildCombinedTable(){
         final InputModel inputModel;
         inputModel = (InputModel)AppContext.getInstance().getModels().get(InputModel.class.getName());
         final List<InputTableRow> inputRows = inputModel.getInputRows();
-        return new CombinedTableModel(inputRows);
+        return new CombinedTablesModel(inputRows);
     }
 }

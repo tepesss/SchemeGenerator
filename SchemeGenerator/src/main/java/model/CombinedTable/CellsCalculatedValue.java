@@ -1,6 +1,5 @@
 package model.combinedTable;
 
-import controller.truthTableTemplates.serialization.CallbackInstanceCreator;
 import javafx.beans.property.IntegerProperty;
 
 import java.util.LinkedList;
@@ -33,7 +32,7 @@ public class CellsCalculatedValue {
         if (this.type == CellValueType.z) {
             calculateZ(row.getWxList());
         } else if (this.type == CellValueType.delta) {
-            calculateDelta(row.getWyList(), row.getZ());
+            calculateDelta(row.getwY(), row.getZ());
         }
     }
 
@@ -47,13 +46,11 @@ public class CellsCalculatedValue {
         }
     }
 
-    private void calculateDelta(LinkedList<IntegerProperty> wyList, CellsCalculatedValue z) {
-        for (IntegerProperty value : wyList) {
-            if (value.getValue() == 0) {
-                ++w0Quantity;
-            } else if (value.getValue() == 1) {
-                ++w1Quantity;
-            }
+    private void calculateDelta(IntegerProperty value, CellsCalculatedValue z) {
+        if (value.getValue() == 0) {
+            ++w0Quantity;
+        } else if (value.getValue() == 1) {
+            ++w1Quantity;
         }
         w0Quantity = z.getW0Quantity() - w0Quantity;
         w1Quantity = z.getW1Quantity() - w1Quantity;

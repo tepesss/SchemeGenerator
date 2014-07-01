@@ -2,6 +2,7 @@ package model.correspondenceTables;
 
 import model.combinedTable.CellsCalculatedValue;
 import model.combinedTable.CombinedTableModel;
+import model.combinedTable.CombinedTablesModel;
 
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -12,12 +13,13 @@ import java.util.LinkedList;
 public class CorrespondenceTablesModel {
     LinkedList<CorrespondenceTable> correspondenceTables = new LinkedList<CorrespondenceTable>();
 
-    public CorrespondenceTablesModel(CombinedTableModel combinedTableModel){
-        LinkedList<CellsCalculatedValue> deltaList = combinedTableModel.getDeltaList();
-        //combinedTableModel.getCombinedTableModelRows();
-        for(CellsCalculatedValue deltaValue : deltaList){
-            correspondenceTables.add(new CorrespondenceTable(combinedTableModel, deltaValue));
+    public CorrespondenceTablesModel(CombinedTablesModel combinedTablesModel){
+        for(CombinedTableModel combinedTableModel: combinedTablesModel.getCombinedTableModelList()){
+            LinkedList<CellsCalculatedValue> deltaList = combinedTableModel.getDeltaList();
+            //combinedTableModel.getCombinedTableModelRows();
+            for(CellsCalculatedValue deltaValue : deltaList){
+                correspondenceTables.add(new CorrespondenceTable(combinedTableModel, deltaValue));
+            }
         }
-
     }
 }

@@ -9,10 +9,10 @@ public class CombinedTableModel {
     private List<CombinedTableModelRow> combinedTableModelRows = new LinkedList<CombinedTableModelRow>();
     private LinkedList<CellsCalculatedValue> deltaList = new LinkedList<>();
 
-    public CombinedTableModel(List<InputTableRow> inputRows) {
+    public CombinedTableModel(List<InputTableRow> inputRows, int yIndex) {
         List<CellsCalculatedValue> deltaList = new LinkedList<>();
         for (InputTableRow row : inputRows) {
-            CombinedTableModelRow combinedRow = new CombinedTableModelRow(row);
+            CombinedTableModelRow combinedRow = new CombinedTableModelRow(row, yIndex);
             deltaList.add(combinedRow.getDelta());
             combinedTableModelRows.add(combinedRow);
         }

@@ -4,21 +4,21 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.inputModel.InputTableRow;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 
 public class CombinedTableModelRow {
     private LinkedList<IntegerProperty> wxList = new LinkedList<IntegerProperty>();
-    private LinkedList<IntegerProperty> wyList = new LinkedList<IntegerProperty>();
+    private IntegerProperty wY;
     private LinkedList<IntegerProperty> cList = new LinkedList<IntegerProperty>();
+    private int yIndex = 0;
     private CellsCalculatedValue z, delta;
 
 
-    public CombinedTableModelRow (InputTableRow inputTableRow){
+    public CombinedTableModelRow (InputTableRow inputTableRow, int yIndex){
+        this.yIndex = yIndex;
         wxList.addAll(inputTableRow.getWxList());
-        wyList.addAll(inputTableRow.getWyList());
+        wY = inputTableRow.getWyList().get(yIndex);
         z = new CellsCalculatedValue(CellsCalculatedValue.CellValueType.z, this);
         delta = new CellsCalculatedValue(CellsCalculatedValue.CellValueType.delta, this);
     }
@@ -27,8 +27,8 @@ public class CombinedTableModelRow {
         return wxList;
     }
 
-    public LinkedList<IntegerProperty> getWyList() {
-        return wyList;
+    public IntegerProperty getwY() {
+        return wY;
     }
 
     public LinkedList<IntegerProperty> getcList() {
