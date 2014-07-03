@@ -36,6 +36,11 @@ public class SchemeGeneratorEngine {
         final InputModel inputModel;
         inputModel = (InputModel)AppContext.getInstance().getModels().get(InputModel.class.getName());
         final List<InputTableRow> inputRows = inputModel.getInputRows();
+        if(inputRows.get(0).getWyList().size()>1){
+            for(InputTableRow row: inputRows){
+                row.calculateZ0Value();
+            }
+        }
         return new CombinedTablesModel(inputRows);
     }
 }

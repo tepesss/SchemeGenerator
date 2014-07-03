@@ -1,6 +1,7 @@
 package model.combinedTable;
 
 import javafx.beans.property.IntegerProperty;
+import model.inputModel.InputTableRow;
 
 import java.util.LinkedList;
 
@@ -33,6 +34,13 @@ public class CellsCalculatedValue {
             calculateZ(row.getWxList());
         } else if (this.type == CellValueType.delta) {
             calculateDelta(row.getwY(), row.getZ());
+        }
+    }
+
+    public CellsCalculatedValue(InputTableRow row) {
+        this.type = CellValueType.z;
+        if (this.type == CellValueType.z) {
+            calculateZ(row.getWxList());
         }
     }
 

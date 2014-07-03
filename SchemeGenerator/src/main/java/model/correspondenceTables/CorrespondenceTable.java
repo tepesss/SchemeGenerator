@@ -1,5 +1,7 @@
 package model.correspondenceTables;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import model.combinedTable.CellsCalculatedValue;
 import model.combinedTable.CombinedTableModel;
@@ -13,7 +15,7 @@ import java.util.List;
  * Created by Volodymyr_Kychak on 23.06.2014.
  */
 public class CorrespondenceTable {
-    private LinkedHashSet<SimpleStringProperty> supplementarySignals = new LinkedHashSet<>();
+    private LinkedHashSet<IntegerProperty> supplementarySignals = new LinkedHashSet<>();
     private CellsCalculatedValue deltaValue;
     private LinkedList<CorrespondenceTableRow> correspondenceTableRows = new LinkedList<>();
 
@@ -37,7 +39,7 @@ public class CorrespondenceTable {
     }
 
     private void fillSupplementarySignals() {
-        supplementarySignals.add(new SimpleStringProperty("w0"));
-        supplementarySignals.add(new SimpleStringProperty("w1"));
+        supplementarySignals.add(new SimpleIntegerProperty(0));
+        supplementarySignals.add(new SimpleIntegerProperty(1));
     }
 }

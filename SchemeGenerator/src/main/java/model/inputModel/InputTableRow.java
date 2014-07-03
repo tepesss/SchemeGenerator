@@ -1,6 +1,7 @@
 package model.inputModel;
 
 import javafx.beans.property.IntegerProperty;
+import model.combinedTable.CellsCalculatedValue;
 
 import java.util.LinkedList;
 
@@ -10,7 +11,7 @@ import java.util.LinkedList;
 public class InputTableRow {
     private LinkedList<IntegerProperty> wxList = new LinkedList<IntegerProperty>();
     private LinkedList<IntegerProperty> wyList = new LinkedList<IntegerProperty>();
-
+    private CellsCalculatedValue z0 = null;
     public InputTableRow() {
     }
 
@@ -25,5 +26,9 @@ public class InputTableRow {
 
     public LinkedList<IntegerProperty> getWxList() {
         return wxList;
+    }
+
+    public void calculateZ0Value(){
+        z0 = new CellsCalculatedValue(this);
     }
 }

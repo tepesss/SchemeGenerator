@@ -115,7 +115,7 @@ public class InputController implements IBaseController {
                 AppContext.getInstance().addModel(model);
 
                 AppContext.getInstance().getMainScreenController().nextScreen();
-                //generateTemplateString();
+                generateTemplateString();
             }
         });
     }
@@ -135,7 +135,11 @@ public class InputController implements IBaseController {
     private void populateTruthTableChoiceBox() {
         if (truthTableChoiceBox.getItems().size() < 1) {
             ObservableList<TruthTableTemplateTypes> list = FXCollections.observableArrayList();
-            list.addAll(TruthTableTemplateTypes.NO_TEMPLATE, TruthTableTemplateTypes.AND, TruthTableTemplateTypes.NOT, TruthTableTemplateTypes.OR);
+            list.addAll(TruthTableTemplateTypes.NO_TEMPLATE,
+                        TruthTableTemplateTypes.AND,
+                        TruthTableTemplateTypes.NOT,
+                        TruthTableTemplateTypes.OR,
+                        TruthTableTemplateTypes.DESCRAMBLER);
             truthTableChoiceBox.setItems(list);
             truthTableChoiceBox.getSelectionModel().select(0);
         }
