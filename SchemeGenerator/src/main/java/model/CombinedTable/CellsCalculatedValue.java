@@ -11,6 +11,18 @@ public class CellsCalculatedValue {
 
     private int w0Quantity, w1Quantity = 0;
 
+    public CellsCalculatedValue(CellValueType z, CombinedTableModelRow row, boolean isIndefinitelyDependent) {
+        this.type = CellValueType.z;
+        if (this.type == CellValueType.z) {
+            calculateZ(row.getWxList());
+            if ( row.getWxList().get(0).getValue() == 0) {
+                ++w0Quantity;
+            } else if ( row.getWxList().get(0).getValue() == 1) {
+                ++w1Quantity;
+            }
+        }
+    }
+
 
     public enum CellValueType {
         z, delta

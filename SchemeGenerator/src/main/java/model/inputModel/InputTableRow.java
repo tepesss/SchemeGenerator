@@ -12,6 +12,7 @@ public class InputTableRow {
     private LinkedList<IntegerProperty> wxList = new LinkedList<IntegerProperty>();
     private LinkedList<IntegerProperty> wyList = new LinkedList<IntegerProperty>();
     private CellsCalculatedValue z0 = null;
+
     public InputTableRow() {
     }
 
@@ -30,5 +31,9 @@ public class InputTableRow {
 
     public void calculateZ0Value(){
         z0 = new CellsCalculatedValue(this);
+    }
+
+    public CellsCalculatedValue getZ0() {
+        return z0;
     }
 }

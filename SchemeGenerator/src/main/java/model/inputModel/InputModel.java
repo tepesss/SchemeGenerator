@@ -11,6 +11,7 @@ import model.BaseModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,6 +28,27 @@ public class InputModel extends BaseModel implements Serializable {
     private IntegerProperty wxQuantity = new SimpleIntegerProperty(2);
     private IntegerProperty wyQuantity = new SimpleIntegerProperty(2);
     private Callback<TableColumn, TableCell> cellFactory = new EditableCellCallback();
+    private boolean isIndefinitelyDependent = false;
+
+
+
+
+    public void checkForDependency() {
+        HashMap map = new HashMap();
+        for(InputTableRow row :inputRows){
+            row.calculateZ0Value();
+
+            for(IntegerProperty property: row.getWyList()){
+                if(map.containsValue(property)){
+                    if(map.get(property)!=row.getZ0()){
+                        isIndefinitelyDependent = true;
+                    }
+                }else{
+                    map.put(property, row.getZ0());
+                }
+            }
+        }
+    }
 
     public enum TableColumnsTypes {
         WX("Wx"), WY("Wy");
@@ -129,5 +151,8 @@ public class InputModel extends BaseModel implements Serializable {
         for (int i = 0; i < y; i++)
             row.getWyList().add(new SimpleIntegerProperty(0));
         return row;
+    }
+    public boolean isIndefinitelyDependent() {
+        return isIndefinitelyDependent;
     }
 }

@@ -23,6 +23,14 @@ public class CombinedTableModelRow {
         delta = new CellsCalculatedValue(CellsCalculatedValue.CellValueType.delta, this);
     }
 
+    public CombinedTableModelRow(InputTableRow inputTableRow, int yIndex, boolean indefinitelyDependent) {
+        this.yIndex = yIndex;
+        wxList.addAll(inputTableRow.getWxList());
+        wY = inputTableRow.getWyList().get(yIndex);
+        z = calculateZ(indefinitelyDependent);
+        delta = new CellsCalculatedValue(CellsCalculatedValue.CellValueType.delta, this);
+    }
+
     public LinkedList<IntegerProperty> getWxList() {
         return wxList;
     }
@@ -31,6 +39,9 @@ public class CombinedTableModelRow {
         return wY;
     }
 
+    private CellsCalculatedValue calculateZ(boolean isIndefinitelyDependent){
+        return new CellsCalculatedValue(CellsCalculatedValue.CellValueType.z, this, isIndefinitelyDependent);
+    }
     public LinkedList<IntegerProperty> getcList() {
         return cList;
     }

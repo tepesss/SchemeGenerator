@@ -112,6 +112,7 @@ public class InputController implements IBaseController {
         generateBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                model.checkForDependency();
                 AppContext.getInstance().addModel(model);
 
                 AppContext.getInstance().getMainScreenController().nextScreen();
