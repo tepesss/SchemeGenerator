@@ -38,13 +38,14 @@ public class InputModel extends BaseModel implements Serializable {
         for(InputTableRow row :inputRows){
             row.calculateZ0Value();
 
-            for(IntegerProperty property: row.getWyList()){
-                if(map.containsValue(property)){
-                    if(map.get(property)!=row.getZ0()){
+            for(IntegerProperty y: row.getWyList()){
+                int yValue = y.getValue();
+                if(map.containsKey(yValue)){
+                    if(map.get(yValue)!=row.getZ0()){
                         isIndefinitelyDependent = true;
                     }
                 }else{
-                    map.put(property, row.getZ0());
+                    map.put(yValue, row.getZ0());
                 }
             }
         }

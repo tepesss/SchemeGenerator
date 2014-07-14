@@ -33,7 +33,7 @@ public class CorrespondenceTable {
         List<CombinedTableModelRow> combinedRows = combinedTableModel.getCombinedTableModelRows();
         for (CombinedTableModelRow combinedRow : combinedRows){
             CorrespondenceTableRow row = new CorrespondenceTableRow(combinedRow, cIndex);
-            row.fillSignals(supplementarySignals);
+            row.fillSignals(supplementarySignals, deltaValue);
             correspondenceTableRows.add(row);
         }
     }

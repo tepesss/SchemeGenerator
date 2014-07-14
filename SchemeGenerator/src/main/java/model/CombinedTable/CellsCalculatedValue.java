@@ -66,10 +66,10 @@ public class CellsCalculatedValue {
         }
     }
 
-    private void calculateDelta(IntegerProperty value, CellsCalculatedValue z) {
-        if (value.getValue() == 0) {
+    private void calculateDelta(IntegerProperty wY, CellsCalculatedValue z) {
+        if (wY.getValue() == 0) {
             ++w0Quantity;
-        } else if (value.getValue() == 1) {
+        } else if (wY.getValue() == 1) {
             ++w1Quantity;
         }
         w0Quantity = z.getW0Quantity() - w0Quantity;

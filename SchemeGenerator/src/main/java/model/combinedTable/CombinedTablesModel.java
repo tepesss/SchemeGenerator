@@ -10,10 +10,10 @@ import java.util.List;
  * Created by Admin on 30.06.2014.
  */
 public class CombinedTablesModel {
+    LinkedList<CombinedTableModel> combinedTableModelList = new LinkedList<>();
+
     public CombinedTablesModel(InputModel inputModel) {
-        int i = inputModel.getInputRows().get(0).getWyList().size();
-        while(i>0){
-            --i;
+        for (int i = 0; i < inputModel.getInputRows().get(0).getWyList().size(); i++) {
             combinedTableModelList.add(new CombinedTableModel(inputModel, i));
         }
     }
@@ -22,13 +22,5 @@ public class CombinedTablesModel {
         return combinedTableModelList;
     }
 
-    LinkedList<CombinedTableModel> combinedTableModelList = new LinkedList<>();
-    public CombinedTablesModel(List<InputTableRow> inputRows) {
 
-        int i = inputRows.get(0).getWyList().size();
-        while(i>0){
-            --i;
-            combinedTableModelList.add(new CombinedTableModel(inputRows, i));
-        }
-    }
 }

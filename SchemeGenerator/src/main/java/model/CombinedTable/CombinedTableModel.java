@@ -10,23 +10,6 @@ public class CombinedTableModel {
     private List<CombinedTableModelRow> combinedTableModelRows = new LinkedList<CombinedTableModelRow>();
     private LinkedList<CellsCalculatedValue> deltaList = new LinkedList<>();
 
-    public CombinedTableModel(List<InputTableRow> inputRows, int yIndex) {
-        List<CellsCalculatedValue> deltaList = new LinkedList<>();
-        for (InputTableRow row : inputRows) {
-            CombinedTableModelRow combinedRow = new CombinedTableModelRow(row, yIndex);
-            deltaList.add(combinedRow.getDelta());
-            combinedTableModelRows.add(combinedRow);
-        }
-        for (CellsCalculatedValue value : deltaList) {
-            if (!containsValue(this.deltaList, value)) {
-                this.deltaList.add(value);
-            }
-        }
-        for (CombinedTableModelRow combinedRow : combinedTableModelRows) {
-            combinedRow.setCListByDeltaList(this.deltaList);
-        }
-    }
-
     public CombinedTableModel(InputModel inputModel, int yIndex) {
         List<CellsCalculatedValue> deltaList = new LinkedList<>();
         for (InputTableRow row : inputModel.getInputRows()) {
