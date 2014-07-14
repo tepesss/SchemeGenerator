@@ -1,14 +1,17 @@
 package controller;
 
+import controller.utils.CommonValues;
 import controller.utils.Utils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import model.AppContext;
 import model.OutputModel;
 
 /**
@@ -29,15 +32,15 @@ public class OutputController implements IBaseController, EventHandler<MouseEven
 
     @Override
     public void init() {
-        /*
-        model = (OutputModel) AppContext.getInstance().getModels().get(model.getClass().getName());
-        System.out.println(model);
-        */
+        model = (OutputModel) AppContext.getInstance().getModels().get(OutputModel.class.getName());
+
         saveBtn.setOnMouseClicked(this);
         printBtn.setOnMouseClicked(this);
         GraphicsContext gc = schemeCanvas.getGraphicsContext2D();
-        gc.setFill(Color.AQUA);
-        gc.fillRect(0, 0, schemeCanvas.getWidth(), schemeCanvas.getHeight());
+
+        gc.drawImage(getSchemeImage(), CommonValues.CANVAS_WIDTH, CommonValues.CANVAS_HEIGHT);
+        gc.setFill(Color.RED);
+        gc.fillRect(0, 0, CommonValues.CANVAS_WIDTH, CommonValues.CANVAS_HEIGHT);
     }
 
     @Override
@@ -49,5 +52,9 @@ public class OutputController implements IBaseController, EventHandler<MouseEven
             schemeCanvas.snapshot(null, writableImage);
             Utils.saveToFile(writableImage);
         }
+    }
+
+    private Image getSchemeImage(){
+       return model.getImage();
     }
 }

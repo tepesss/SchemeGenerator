@@ -1,3 +1,4 @@
+import controller.utils.CommonValues;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,6 +24,8 @@ public class SchemeGenerator extends Application {
         this.root = (Pane) loader.load();
         createAppContext();
         Scene scene = new Scene(root);
+        stage.setHeight(CommonValues.STAGE_HEIGHT);
+        stage.setWidth(CommonValues.STAGE_WIDTH);
         stage.setScene(scene);
         stage.show();
     }

@@ -2,15 +2,14 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <AnchorPane layoutX="0.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
             fx:controller="controller.OutputController">
     <Canvas
             fx:id="schemeCanvas"
-            height="450.0"
-            width="500.0"
-            AnchorPane.bottomAnchor="50.0"/>
+            height="400.0"
+            width="600.0"
+            AnchorPane.topAnchor="0"/>
     <HBox
             spacing="5"
             AnchorPane.bottomAnchor="10.0"

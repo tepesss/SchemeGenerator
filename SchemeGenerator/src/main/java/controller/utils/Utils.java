@@ -1,6 +1,5 @@
 package controller.utils;
 
-import controller.truthTableTemplates.serialization.IntegerPropertyAdapter;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.print.*;
 import javafx.scene.Node;
