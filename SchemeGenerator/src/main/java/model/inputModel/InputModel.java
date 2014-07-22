@@ -1,5 +1,6 @@
 package model.inputModel;
 
+import com.sun.javafx.css.CalculatedValue;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -8,11 +9,13 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 import model.BaseModel;
+import model.combinedTable.CellsCalculatedValue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,18 +37,20 @@ public class InputModel extends BaseModel implements Serializable {
 
 
     public void checkForDependency() {
-        HashMap map = new HashMap();
+        isIndefinitelyDependent = false;
+        TreeMap<CellsCalculatedValue, Integer> map = new TreeMap();
         for(InputTableRow row :inputRows){
             row.calculateZ0Value();
 
             for(IntegerProperty y: row.getWyList()){
+                CellsCalculatedValue zValue = row.getZ0();
                 int yValue = y.getValue();
-                if(map.containsKey(yValue)){
-                    if(map.get(yValue)!=row.getZ0()){
+                if(map.containsKey(zValue)){
+                    if(map.get(zValue)!= yValue){
                         isIndefinitelyDependent = true;
                     }
                 }else{
-                    map.put(yValue, row.getZ0());
+                    map.put(zValue, yValue);
                 }
             }
         }

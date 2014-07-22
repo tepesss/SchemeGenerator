@@ -6,7 +6,7 @@ import model.inputModel.InputTableRow;
 import java.util.LinkedList;
 
 
-public class CellsCalculatedValue {
+public class CellsCalculatedValue implements Comparable {
     private CellValueType type;
 
     private int w0Quantity, w1Quantity = 0;
@@ -15,11 +15,22 @@ public class CellsCalculatedValue {
         this.type = CellValueType.z;
         if (this.type == CellValueType.z) {
             calculateZ(row.getWxList());
-            if ( row.getWxList().get(0).getValue() == 0) {
-                ++w0Quantity;
-            } else if ( row.getWxList().get(0).getValue() == 1) {
-                ++w1Quantity;
+            if (isIndefinitelyDependent) {
+                if (row.getWxList().get(0).getValue() == 0) {
+                    ++w0Quantity;
+                } else if (row.getWxList().get(0).getValue() == 1) {
+                    ++w1Quantity;
+                }
             }
+        }
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (this.equals(o)) {
+            return 0;
+        } else {
+            return -1;
         }
     }
 

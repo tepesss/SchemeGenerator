@@ -38,13 +38,13 @@ public class CorrespondenceTableRow {
     private void calculateSignalValues(IntegerProperty signal, CellsCalculatedValue deltaValue){
         System.out.println(signal + " " + deltaValue.getW0Quantity() + " " + deltaValue.getW1Quantity());
         if (signal.getValue()==0 ){
-            if(deltaValue.getW0Quantity()!=0 && combinedRow.getwY().getValue()==0){
+            if(combinedRow.getwY().getValue()==0){
                 signalValues.add(new SimpleIntegerProperty(1));
             }else{
                 signalValues.add(new SimpleIntegerProperty(0));
             }
         }else if(signal.getValue() == 1){
-            if(deltaValue.getW1Quantity()!=0   && combinedRow.getwY().getValue()==1){
+            if(combinedRow.getwY().getValue()==1){
                 signalValues.add(new SimpleIntegerProperty(1));
             }else{
                 signalValues.add(new SimpleIntegerProperty(0));

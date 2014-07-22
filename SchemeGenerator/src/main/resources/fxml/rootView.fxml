@@ -4,6 +4,6 @@
 <BorderPane
         xmlns:fx="http://javafx.com/fxml/1"
         layoutX="0.0"
-        minHeight="500"
-        minWidth="500"
+        prefHeight="500"
+        prefWidth="600"
         xmlns="http://javafx.com/javafx/2.2"/>
