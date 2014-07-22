@@ -33,14 +33,9 @@ public class OutputController implements IBaseController, EventHandler<MouseEven
     @Override
     public void init() {
         model = (OutputModel) AppContext.getInstance().getModels().get(OutputModel.class.getName());
-
         saveBtn.setOnMouseClicked(this);
         printBtn.setOnMouseClicked(this);
-        GraphicsContext gc = schemeCanvas.getGraphicsContext2D();
-
-        gc.drawImage(getSchemeImage(), CommonValues.CANVAS_WIDTH, CommonValues.CANVAS_HEIGHT);
-        gc.setFill(Color.RED);
-        gc.fillRect(0, 0, CommonValues.CANVAS_WIDTH, CommonValues.CANVAS_HEIGHT);
+        new SchemeImageBuilder().buildImage(schemeCanvas);
     }
 
     @Override
@@ -54,7 +49,12 @@ public class OutputController implements IBaseController, EventHandler<MouseEven
         }
     }
 
-    private Image getSchemeImage(){
-       return model.getImage();
+    public Canvas buildImage(){
+        Canvas canvas = new Canvas(CommonValues.CANVAS_WIDTH, CommonValues.CANVAS_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        gc.setFill(Color.GOLD);
+        gc.fillRect(0, 0, CommonValues.CANVAS_WIDTH, CommonValues.CANVAS_HEIGHT);
+        return canvas;
     }
 }

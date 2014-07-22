@@ -6,4 +6,10 @@ package controller.utils;
 public class CommonValues {
     public static final double CANVAS_HEIGHT = 400;
     public static final double CANVAS_WIDTH = 600;
+
+    /* SchemeImageBuilder constants START */
+
+    public static final double LOGICAL_ELEMENT_WIDTH = 20;
+    public static final double LOGICAL_ELEMENT_HEIGHT = 30;
+    /* SchemeImageBuilder constants END */
 }

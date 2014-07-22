@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.image.Image;
+import model.equationModel.OperatorEquationModel;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,16 +11,17 @@ import javafx.scene.image.Image;
  * To change this template use File | Settings | File Templates.
  */
 public class OutputModel extends BaseModel {
-    private Image image;
+    private OperatorEquationModel equationModel;
 
     public OutputModel() {
     }
 
-    public Image getImage() {
-        return image;
+    public OperatorEquationModel getEquationModel() {
+        return equationModel;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setEquationModel(OperatorEquationModel equationModel) {
+        this.equationModel = equationModel;
     }
+
 }

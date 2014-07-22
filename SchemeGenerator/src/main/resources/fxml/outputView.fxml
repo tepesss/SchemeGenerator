@@ -9,8 +9,10 @@
 
 <AnchorPane layoutX="0.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
             fx:controller="controller.OutputController">
-    <Canvas fx:id="schemeCanvas" height="400.0" layoutX="0.0"  width="600.0"
-            AnchorPane.topAnchor="0"/>
+
+    <Canvas fx:id="schemeCanvas" height="400" layoutX="0.0"  width="600"
+            AnchorPane.topAnchor="20"
+            />
     <HBox alignment="TOP_CENTER" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <children>
             <Button fx:id="printBtn" mnemonicParsing="false" prefHeight="25.0" text="%print"/>
