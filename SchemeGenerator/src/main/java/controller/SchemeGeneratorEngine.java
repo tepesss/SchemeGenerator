@@ -21,7 +21,7 @@ public class SchemeGeneratorEngine {
 
     private OperatorEquationModel buildOperatorDescription(){
         CorrespondenceTablesModel correspondenceTablesModel =  buildCorrespondenceTables();
-        OperatorEquationModel operatorEquationModel = new OperatorEquationModel(correspondenceTablesModel);
+        OperatorEquationModel operatorEquationModel = new OperatorEquationModel();
         AppContext.getInstance().addModel(operatorEquationModel);
         return operatorEquationModel;
     }
@@ -36,7 +36,8 @@ public class SchemeGeneratorEngine {
     private CombinedTablesModel buildCombinedTable(){
         final InputModel inputModel;
         inputModel = (InputModel)AppContext.getInstance().getModels().get(InputModel.class.getName());
-
+        CombinedTablesModel correspondenceTablesModel =  new CombinedTablesModel(inputModel);
+        AppContext.getInstance().addModel(correspondenceTablesModel);
         return new CombinedTablesModel(inputModel);
     }
 

@@ -1,4 +1,4 @@
-package controller;
+package controller.builder;
 
 import controller.utils.CommonValues;
 import javafx.geometry.VPos;

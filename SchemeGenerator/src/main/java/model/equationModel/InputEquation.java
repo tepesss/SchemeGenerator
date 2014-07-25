@@ -10,24 +10,13 @@ import java.util.LinkedList;
  * Created by Volodymyr_Kychak on 7/14/14.
  */
 public class InputEquation {
-    LinkedList<StringProperty> inputs = new LinkedList<>();
-    LinkedList<CalculatedValue> supplementarySignals = new LinkedList<>();
+    private LinkedList<OperatorElement> operatorElements;
 
-    public LinkedList<StringProperty> getInputs() {
-        return inputs;
+    public void setInputEquation(LinkedList<OperatorElement> operatorElements) {
+        this.operatorElements = operatorElements;
     }
 
-    public void setInputs(LinkedList<StringProperty> inputs) {
-        this.inputs = inputs;
+    public LinkedList<OperatorElement> getOperatorElements() {
+        return operatorElements;
     }
-
-    public LinkedList<CalculatedValue> getSupplementarySignals() {
-        return supplementarySignals;
-    }
-
-    public void setSupplementarySignals(LinkedList<CalculatedValue> supplementarySignals) {
-        this.supplementarySignals = supplementarySignals;
-    }
-
-
 }
