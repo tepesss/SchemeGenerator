@@ -9,6 +9,7 @@ import model.combinedTable.CombinedTablesModel;
 import model.equationModel.ElementsType;
 import model.equationModel.InputEquation;
 import model.equationModel.OperatorElement;
+import model.equationModel.OperatorEquationModel;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -21,7 +22,7 @@ public class InputEquationBuilder extends AbstractEquationBuilder {
     private LinkedList<OperatorElement> operatorList = new LinkedList<>();
     private int counter;
 
-    public InputEquation build() {
+    public InputEquation build(OperatorEquationModel operatorEquationModel) {
         InputEquation inputEquation = new InputEquation();
         fillOperators();
         inputEquation.setInputEquation(operatorList);
@@ -64,12 +65,12 @@ public class InputEquationBuilder extends AbstractEquationBuilder {
     }
 
     private void addToList(OperatorElement element) {
-        boolean needToAdd = false;
+        boolean needToAdd = true;
 
         //// Contains function!!!!!!!!!!!!!!!!!!!!!!!!!!
         for (OperatorElement e : operatorList) {
-            if (!elementEquals(e, element)) {
-                needToAdd = true;
+            if (elementEquals(e, element)) {
+                needToAdd = false;
             }
         }
         if (operatorList.isEmpty() || needToAdd) {
@@ -90,9 +91,7 @@ public class InputEquationBuilder extends AbstractEquationBuilder {
             if (e.getType() == ElementsType.SUPPLEMENTARY_SIGNALS) {
                 return e.getValue().equals(element.getValue());
             } else if (e.getType() == ElementsType.INPUT_SIGNALS) {
-                int eVal = (int) e.getValue();
-                int elementVal = (int) element.getValue();
-                return eVal == elementVal;
+                return (int) e.getValue() == (int) element.getValue();
             }
             return false;
         } else {

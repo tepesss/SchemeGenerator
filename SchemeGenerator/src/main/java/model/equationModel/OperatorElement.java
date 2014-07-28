@@ -31,12 +31,27 @@ public class OperatorElement {
         this.inConnections = inConnections;
     }
 
+    public boolean addAllInConnections (List<IntegerProperty> inConnections) {
+        return this.inConnections.addAll(inConnections);
+    }
+    public boolean addInConnection (IntegerProperty connection) {
+        return this.inConnections.add(connection);
+    }
+
     public List<IntegerProperty> getOutConnections() {
         return outConnections;
     }
 
     public void setOutConnections(List<IntegerProperty> outConnections) {
         this.outConnections = outConnections;
+    }
+
+    public boolean addAllOutConnections (List<IntegerProperty> outConnections) {
+        return this.outConnections.addAll(outConnections);
+    }
+
+    public boolean addOutConnection(IntegerProperty connection) {
+        return this.outConnections.add(connection);
     }
 
     public Object getValue() {

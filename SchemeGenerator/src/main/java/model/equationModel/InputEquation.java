@@ -19,4 +19,14 @@ public class InputEquation {
     public LinkedList<OperatorElement> getOperatorElements() {
         return operatorElements;
     }
+
+    public LinkedList<OperatorElement> getSubListByType(ElementsType type){
+        LinkedList<OperatorElement> list = new LinkedList<>();
+        for(OperatorElement element : operatorElements){
+            if(element.getType().equals(type)){
+                list.add(element);
+            }
+        }
+        return list;
+    }
 }

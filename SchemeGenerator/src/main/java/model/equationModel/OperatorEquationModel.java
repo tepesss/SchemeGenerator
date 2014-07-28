@@ -21,14 +21,38 @@ public class OperatorEquationModel extends BaseModel {
     }
 
     private void buildInputEquation(){
-        input = new InputEquationBuilder().build();
+        input = new InputEquationBuilder().build(this);
     }
 
     private void buildOperatorEquation(){
-        operator = new OperatorEquationBuilder().build();
+        operator = new OperatorEquationBuilder().build(this);
     }
 
     private void buildOutputEquation(){
-        output = new OutputEquationBuilder().build();
+        output = new OutputEquationBuilder().build(this);
+    }
+
+    public InputEquation getInput() {
+        return input;
+    }
+
+    public void setInput(InputEquation input) {
+        this.input = input;
+    }
+
+    public OperatorEquation getOperator() {
+        return operator;
+    }
+
+    public void setOperator(OperatorEquation operator) {
+        this.operator = operator;
+    }
+
+    public OutputEquation getOutput() {
+        return output;
+    }
+
+    public void setOutput(OutputEquation output) {
+        this.output = output;
     }
 }
