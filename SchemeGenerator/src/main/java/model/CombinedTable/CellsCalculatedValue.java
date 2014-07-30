@@ -106,13 +106,13 @@ public class CellsCalculatedValue implements Comparable {
     public String toString() {
         StringBuilder result = new StringBuilder();
         if(w0Quantity!=0){
-            result.append(w0Quantity+"Wx0");
+            result.append(w0Quantity+"W0");
         }
         if(w1Quantity!=0){
-            if(w1Quantity>0){
-                result.append(" + "+w1Quantity+"Wx1");
+            if(w0Quantity!=0){
+                result.append(" + "+w1Quantity+"W1");
             }else {
-                result.append(w1Quantity+"Wx1");
+                result.append(w1Quantity+"W1");
             }
         }
         return result.toString();

@@ -7,7 +7,7 @@ import controller.utils.Utils;
  */
 public enum ElementsType {
 
-    A("A"), F("F"), T("T"), FILTER_L("FILTER_L"), FILTER_R("FILTER_R"), FILTER_H("FILTER_H"),
+    A("A"), F("F"), T("T"), FILTER_L("F_L"), FILTER_R("F_R"), FILTER_H("F_H"),
     INPUT_SIGNALS("INPUT_SIGNALS"), OUTPUT_SIGNALS("OUTPUT_SIGNALS"),  SUPPLEMENTARY_SIGNALS("SUPPLEMENTARY_SIGNALS");
     private String name;
 

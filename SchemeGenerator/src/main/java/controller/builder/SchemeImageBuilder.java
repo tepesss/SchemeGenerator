@@ -19,6 +19,8 @@ import java.util.LinkedList;
  * Created by Volodymyr_Kychak on 7/14/14.
  */
 public class SchemeImageBuilder {
+    public static final int X_START = 60;
+    public static final int Y_START = 20;
     private OutputModel model;
     private OperatorEquationModel equation;
     private Canvas canvas;
@@ -50,8 +52,8 @@ public class SchemeImageBuilder {
     private void drawInputs() {
         InputEquation input = equation.getInput();
         LinkedList<OperatorElementWrapper> inputsList = wrapElements(input.getOperatorElements());
-        double x = 40;
-        double y = 20;
+        double x = X_START;
+        double y = Y_START;
         for (OperatorElementWrapper elementWrapper: inputsList){
             elementWrapper.setX(x);
             elementWrapper.setY(y);
@@ -59,7 +61,6 @@ public class SchemeImageBuilder {
             drawnElements.add(elementWrapper);
             y+=50;
         }
-        LinkedList<OperatorElementWrapper> supplSignalList =  wrapElements(input.getSubListByType(ElementsType.SUPPLEMENTARY_SIGNALS));
     }
 
     private LinkedList<OperatorElementWrapper> wrapElements(LinkedList<OperatorElement> operatorList){
@@ -71,7 +72,17 @@ public class SchemeImageBuilder {
     }
 
     private void drawOperators() {
+        double x = X_START+CommonValues.LOGICAL_ELEMENT_WIDTH*2;
+        double y = Y_START;
         OperatorEquation operator = equation.getOperator();
+        LinkedList<OperatorElementWrapper> elementsList = wrapElements(operator.getEquationElements());
+        for (OperatorElementWrapper elementWrapper: elementsList){
+            elementWrapper.setX(x);
+            elementWrapper.setY(y);
+            drawer.drawOperatorElement(elementWrapper);
+            drawnElements.add(elementWrapper);
+            x+=CommonValues.LOGICAL_ELEMENT_WIDTH*2;
+        }
     }
 
     private void drawOutputs() {
