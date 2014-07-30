@@ -11,7 +11,7 @@ public class CommonValues {
 
     public static final double LOGICAL_ELEMENT_WIDTH = 20;
     public static final double LOGICAL_ELEMENT_HEIGHT = 30;
-    public static final double SIGNAL_ELEMENT_WIDTH = 10;
+    public static final double SIGNAL_ELEMENT_WIDTH = 20;
     public static final double SIGNAL_ELEMENT_HEIGHT = 15;
     /* SchemeImageBuilder constants END */
 }

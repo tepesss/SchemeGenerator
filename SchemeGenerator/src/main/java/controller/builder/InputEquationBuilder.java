@@ -50,7 +50,7 @@ public class InputEquationBuilder extends AbstractEquationBuilder {
         while (i > 0) {
             OperatorElement element = new OperatorElement();
             element.setType(ElementsType.INPUT_SIGNALS);
-            element.setValue(--i);
+            element.setValue("Wx"+(--i));
             addToList(element);
         }
     }
@@ -91,7 +91,7 @@ public class InputEquationBuilder extends AbstractEquationBuilder {
             if (e.getType() == ElementsType.SUPPLEMENTARY_SIGNALS) {
                 return e.getValue().equals(element.getValue());
             } else if (e.getType() == ElementsType.INPUT_SIGNALS) {
-                return (int) e.getValue() == (int) element.getValue();
+                return e.getValue().equals(element.getValue());
             }
             return false;
         } else {

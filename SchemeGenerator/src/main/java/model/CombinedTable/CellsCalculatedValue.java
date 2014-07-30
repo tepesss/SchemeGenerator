@@ -66,7 +66,10 @@ public class CellsCalculatedValue implements Comparable {
             calculateZ(row.getWxList());
         }
     }
-
+    public CellsCalculatedValue(int w0, int w1) {
+        this.w1Quantity = w1;
+        this.w0Quantity = w0;
+    }
     void calculateZ(LinkedList<IntegerProperty> wxList) {
         for (IntegerProperty value : wxList) {
             if (value.getValue() == 0) {
@@ -97,5 +100,21 @@ public class CellsCalculatedValue implements Comparable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        if(w0Quantity!=0){
+            result.append(w0Quantity+"Wx0");
+        }
+        if(w1Quantity!=0){
+            if(w1Quantity>0){
+                result.append(" + "+w1Quantity+"Wx1");
+            }else {
+                result.append(w1Quantity+"Wx1");
+            }
+        }
+        return result.toString();
     }
 }

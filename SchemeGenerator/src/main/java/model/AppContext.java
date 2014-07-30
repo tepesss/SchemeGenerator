@@ -17,7 +17,7 @@ public class AppContext extends BaseModel {
     private static AppContext instance;
     private static MainScreenController mainScreenController;
     private static Locale currentLocale;
-    private Pane RootPane;
+    private Pane rootPane;
 
     private Map<String, IBaseModel> models = new HashMap<>();
 
@@ -40,11 +40,11 @@ public class AppContext extends BaseModel {
     }
 
     public Pane getRootPane() {
-        return RootPane;
+        return rootPane;
     }
 
     public void setRootPane(Pane pane) {
-        this.RootPane = pane;
+        this.rootPane = pane;
         mainScreenController = new MainScreenController(this);
     }
 
@@ -52,9 +52,6 @@ public class AppContext extends BaseModel {
         return mainScreenController;
     }
 
-    public void setMainScreenController(MainScreenController controller) {
-        mainScreenController = controller;
-    }
     public void addModel(IBaseModel model){
         models.put(model.getClass().getName(), model);
     }

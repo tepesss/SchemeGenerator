@@ -11,9 +11,9 @@ import java.util.List;
  * Created by Volodymyr_Kychak on 7/28/14.
  */
 public class OperatorElementWrapper {
-    OperatorElement operatorElement;
-    double x;
-    double y;
+    private OperatorElement operatorElement;
+    private double x;
+    private double y;
 
     private OperatorElementWrapper(){}
 
@@ -54,7 +54,23 @@ public class OperatorElementWrapper {
         return 0 ;
     }
 
-    private ElementGraphicType getElementGraphicType(){
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public ElementGraphicType getElementGraphicType(){
         if(getType().equals(ElementsType.INPUT_SIGNALS)
                 || getType().equals(ElementsType.OUTPUT_SIGNALS)
                 || getType().equals(ElementsType.SUPPLEMENTARY_SIGNALS)){
@@ -64,7 +80,9 @@ public class OperatorElementWrapper {
         }
     }
 
-    private enum ElementGraphicType {
-        BLOCK, SIGNAL;
+    public static OperatorElementWrapper wrap(OperatorElement element){
+        OperatorElementWrapper wrappedElement = new OperatorElementWrapper(element);
+        return wrappedElement;
     }
+
 }
