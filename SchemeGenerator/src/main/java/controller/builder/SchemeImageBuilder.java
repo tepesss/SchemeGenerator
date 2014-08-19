@@ -1,13 +1,13 @@
 package controller.builder;
 
+import controller.GraphicUtils.ConnectionsDrawer;
 import controller.GraphicUtils.ImageDrawer;
 import controller.GraphicUtils.OperatorElementWrapper;
 import controller.utils.CommonValues;
-import javafx.geometry.VPos;
+import javafx.beans.property.IntegerProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 import model.AppContext;
 import model.OutputModel;
 import model.combinedTable.CellsCalculatedValue;
@@ -26,6 +26,7 @@ public class SchemeImageBuilder {
     private Canvas canvas;
     private GraphicsContext gc;
     private ImageDrawer drawer;
+    private ConnectionsDrawer connector;
     private LinkedList<OperatorElementWrapper> drawnElements = new LinkedList<>();
 
     public void buildImage(Canvas canvas) {
@@ -41,12 +42,14 @@ public class SchemeImageBuilder {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, CommonValues.CANVAS_WIDTH, CommonValues.CANVAS_HEIGHT);
         drawer = new ImageDrawer(gc);
+        connector = new ConnectionsDrawer(gc);
     }
 
     private void drawEquation() {
         drawInputs();
         drawOperators();
         drawOutputs();
+        drawConnections();
     }
 
     private void drawInputs() {
@@ -83,10 +86,36 @@ public class SchemeImageBuilder {
             drawnElements.add(elementWrapper);
             x+=CommonValues.LOGICAL_ELEMENT_WIDTH*2;
         }
+
+
     }
 
     private void drawOutputs() {
         OutputEquation output = equation.getOutput();
+    }
+
+
+    private void drawConnections() {
+        for(OperatorElementWrapper element:drawnElements){
+            for(IntegerProperty outConnection : element.getOutConnections()){
+                OperatorElementWrapper elementWithConnection = getElementByInConnection(outConnection);
+                if(elementWithConnection != null){
+                    connector.connect(element, getElementByInConnection(outConnection));
+                }
+            }
+        }
+
+    }
+
+    private OperatorElementWrapper getElementByInConnection(IntegerProperty connection) {
+        for(OperatorElementWrapper element:drawnElements){
+            for(IntegerProperty inConnection : element.getInConnections()){
+                if(inConnection.getValue() == connection.getValue()){
+                    return element;
+                }
+            }
+        }
+        return null;
     }
 
     private void drawTest() {

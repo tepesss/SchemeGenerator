@@ -70,6 +70,7 @@ public class CellsCalculatedValue implements Comparable {
         this.w1Quantity = w1;
         this.w0Quantity = w0;
     }
+
     void calculateZ(LinkedList<IntegerProperty> wxList) {
         for (IntegerProperty value : wxList) {
             if (value.getValue() == 0) {

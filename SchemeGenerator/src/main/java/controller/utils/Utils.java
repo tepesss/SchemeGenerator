@@ -1,5 +1,6 @@
 package controller.utils;
 
+import controller.GraphicUtils.OperatorElementWrapper;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.print.*;
 import javafx.scene.Node;
@@ -10,6 +11,7 @@ import javafx.stage.FileChooser;
 import model.AppContext;
 
 import javax.imageio.ImageIO;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,5 +74,29 @@ public class Utils {
                 System.out.println(ex.getMessage());
             }
         }
+    }
+
+    public static Point2D getOutPoint(OperatorElementWrapper out){
+        double x = out.getX() + out.getWidth();
+        double y = out.getY() + out.getHeight()/2;
+        return new Point2D.Double(x, y);
+    }
+
+    public static Point2D getInPoint(OperatorElementWrapper in){
+        double x = in.getX();
+        double y = in.getY() + in.getHeight()/2;
+        return new Point2D.Double(x, y);
+    }
+
+    public static Point2D getTopPoint(OperatorElementWrapper e){
+        double x = e.getX()+e.getWidth()/2;
+        double y = e.getY();
+        return new Point2D.Double(x, y);
+    }
+
+    public static Point2D getBottomPoint(OperatorElementWrapper e){
+        double x = e.getX() + e.getWidth()/2;
+        double y = e.getY() + e.getHeight();
+        return new Point2D.Double(x, y);
     }
 }
