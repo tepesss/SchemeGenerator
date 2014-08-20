@@ -65,36 +65,38 @@ public class ConnectionsDrawer {
         drawConnection(startPoint, endPoint);
     }
 
-    public void drawConnection(Point2D start, Point2D end){
-        if(start.getY() == end.getY()){
-            linesList.addAll(new StraightStrategy().getLinesList(start, end, gc));
-        }else if(!isLineOverlapping(start, end)){
+    public void drawConnection(Point2D start, Point2D end) {
+        if (start.getY() == end.getY()) {
+            if(isLineOverlapping(start, end)){
+                linesList.addAll(new StraightStrategy().getLinesListWithShifts(start, end, gc, linesList));
+            }else{
+                linesList.addAll(new StraightStrategy().getLinesList(start, end, gc));
+            }
+        } else if (!isLineOverlapping(start, end)) {
             linesList.addAll(new NoObstacleStrategy().getLinesList(start, end, gc));
         }else if(isLineOverlapping(start, end)){
-            linesList.addAll(new ObstacleStrategy().getLinesList(start, end, gc));
+            linesList.addAll(new ObstacleStrategy().getLinesListWithShifts(start, end, gc, linesList));
         }
 
     }
-    public boolean isLineOverlapping(Point2D start, Point2D end){
-        boolean overlaps = false;
-        if(linesContainPoint(start)!=null){
-            start.setLocation(start.getX(), start.getY()+ VERTICAL_SHIFT);
-            isLineOverlapping(start, end);
-        }
-        if(linesContainPoint(end)!=null){
-            end.setLocation(end.getX(), end.getY()+ VERTICAL_SHIFT);
-            isLineOverlapping(start, end);
-        }
-        return overlaps;
+
+    public boolean isLineOverlapping(Point2D start, Point2D end) {
+        if (linesContainPoint(start, linesList) != null)
+            return true;
+        if (linesContainPoint(end, linesList) != null)
+            return true;
+        return false;
     }
 
-    private Line2D linesContainPoint(Point2D p){
-        for(Line2D line2D: linesList){
-            if(line2D.getP1().equals(p)||line2D.getP2().equals(p))
+    public static Line2D linesContainPoint(Point2D p, List<Line2D> lines) {
+        for (Line2D line2D : lines) {
+            if (line2D.getP1().equals(p) || line2D.getP2().equals(p))
                 return line2D;
         }
         return null;
     }
+
+
 
 
 }

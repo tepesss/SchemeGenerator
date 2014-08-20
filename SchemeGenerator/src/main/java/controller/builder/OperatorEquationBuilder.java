@@ -60,6 +60,13 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
                         processingElement.addAllInConnections(element.getOutConnections());
                         OperatorElement filterH = addFilterH(processingElement);
 
+                    }else{
+                        OperatorElement processingElement = new OperatorElement();
+                        processingElement.setType(ElementsType.F);
+                        bindElements(operatorsList.getLast(), processingElement);
+                        operatorsList.add(processingElement);
+                        OperatorElement filterH = addFilterH(processingElement);
+                        processingElement.addAllInConnections(element.getOutConnections());
                     }
                         //TODO functionality when element is last
                         OperatorElement processingElement = operatorsList.getLast();
@@ -94,6 +101,12 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
         OperatorElement resultElement = new OperatorElement();
         resultElement.addInConnection(connection);
         return resultElement;
+    }
+
+    private void bindElements(OperatorElement out, OperatorElement in){
+        SimpleIntegerProperty connection = new SimpleIntegerProperty(++counter);
+        out.addOutConnection(connection);
+        in.addInConnection(connection);
     }
 
 

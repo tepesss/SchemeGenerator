@@ -134,15 +134,15 @@ public class InputModel extends BaseModel implements Serializable {
 
     public void updateRowQuantity(int oldVal, int newVal) {
         if (oldVal < newVal) {
-            int delta = newVal * newVal - oldVal * oldVal;
+            int delta = (int)Math.pow(2 , newVal) - (int)Math.pow(2, oldVal);
             if (oldVal == 1) {
                 --delta;
             }
             for (int i = 0; i < delta; i++) {
-                inputRows.add(getEmptyRow(newVal, inputRows.get(0).getWyList().size()));
+                inputRows.add(getEmptyRow(inputRows.get(0).getWxList().size(), inputRows.get(0).getWyList().size()));
             }
         } else {
-            int delta = oldVal * oldVal - newVal * newVal;
+            int delta = (int)Math.pow(2, oldVal) - (int)Math.pow(2 , newVal);
             if (inputRows.size() - delta == 1) {
                 --delta;
             }

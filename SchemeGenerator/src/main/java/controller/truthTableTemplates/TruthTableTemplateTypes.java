@@ -7,7 +7,7 @@ import controller.utils.Utils;
  */
 public enum TruthTableTemplateTypes {
 
-    NO_TEMPLATE("NO_TEMPLATE"), AND("AND"), OR("OR"), NOT("NOT"), DESCRAMBLER("DESCRAMBLER");
+    NO_TEMPLATE("NO_TEMPLATE"), AND("AND"), AND_3("AND_3"), OR("OR"), NOT("NOT"), DESCRAMBLER("DESCRAMBLER");
     private String name;
 
     TruthTableTemplateTypes(String s) {

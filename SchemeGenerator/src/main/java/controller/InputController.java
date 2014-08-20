@@ -138,6 +138,7 @@ public class InputController implements IBaseController {
             ObservableList<TruthTableTemplateTypes> list = FXCollections.observableArrayList();
             list.addAll(TruthTableTemplateTypes.NO_TEMPLATE,
                         TruthTableTemplateTypes.AND,
+                        TruthTableTemplateTypes.AND_3,
                         TruthTableTemplateTypes.NOT,
                         TruthTableTemplateTypes.OR,
                         TruthTableTemplateTypes.DESCRAMBLER);
