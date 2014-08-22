@@ -75,10 +75,15 @@ public class SchemeImageBuilder {
     }
 
     private void drawOperators() {
+        double xPos = drawPreProcessingOperators();
+        drawMultiplicationOperators(xPos + CommonValues.LOGICAL_ELEMENT_WIDTH);
+    }
+
+    private double drawPreProcessingOperators(){
         double x = X_START+CommonValues.LOGICAL_ELEMENT_WIDTH*2;
         double y = Y_START;
         OperatorEquation operator = equation.getOperator();
-        LinkedList<OperatorElementWrapper> elementsList = wrapElements(operator.getEquationElements());
+        LinkedList<OperatorElementWrapper> elementsList = wrapElements(operator.getPreProcessingElements());
         for (OperatorElementWrapper elementWrapper: elementsList){
             elementWrapper.setX(x);
             elementWrapper.setY(y);
@@ -86,8 +91,21 @@ public class SchemeImageBuilder {
             drawnElements.add(elementWrapper);
             x+=CommonValues.LOGICAL_ELEMENT_WIDTH*2;
         }
+        return elementsList.getLast().getX();
+    }
 
-
+    private void drawMultiplicationOperators(double lastElementXPosition){
+        double x = lastElementXPosition+CommonValues.LOGICAL_ELEMENT_WIDTH*3;
+        double y = Y_START;
+        OperatorEquation operator = equation.getOperator();
+        LinkedList<OperatorElementWrapper> elementsList = wrapElements(operator.getMultiplicationElements());
+        for (OperatorElementWrapper elementWrapper: elementsList){
+            elementWrapper.setX(x);
+            elementWrapper.setY(y);
+            drawer.drawOperatorElement(elementWrapper);
+            drawnElements.add(elementWrapper);
+            y+=50;
+        }
     }
 
     private void drawOutputs() {

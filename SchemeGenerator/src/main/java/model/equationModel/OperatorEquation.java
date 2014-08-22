@@ -1,5 +1,6 @@
 package model.equationModel;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -7,12 +8,27 @@ import java.util.LinkedList;
  */
 public class OperatorEquation {
     LinkedList<OperatorElement> equationElements = new LinkedList<>();
+    LinkedList<OperatorElement> preProcessingElements = new LinkedList<>();
+    LinkedList<OperatorElement> multiplicationElements = new LinkedList<>();
 
-    public LinkedList<OperatorElement> getEquationElements() {
-        return equationElements;
+
+    public LinkedList<OperatorElement> getPreProcessingElements() {
+        return preProcessingElements;
+    }
+
+    public LinkedList<OperatorElement> getMultiplicationElements() {
+        return multiplicationElements;
     }
 
     public void setEquationElements(LinkedList<OperatorElement> equationElements) {
         this.equationElements = equationElements;
+    }
+
+    public void setPreProcessingElements(LinkedList<OperatorElement> equationElements) {
+        this.preProcessingElements = equationElements;
+    }
+
+    public void setMultiplicationElements(LinkedList<OperatorElement> equationElements) {
+        this.multiplicationElements = equationElements;
     }
 }

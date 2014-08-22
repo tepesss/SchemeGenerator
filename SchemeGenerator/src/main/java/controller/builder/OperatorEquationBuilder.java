@@ -1,6 +1,5 @@
 package controller.builder;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.equationModel.*;
 import model.inputModel.InputModel;
@@ -14,7 +13,8 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
     private InputModel inputModel;
     private InputEquation inputEquationModel;
     private OperatorEquation equation;
-    private LinkedList<OperatorElement> operatorsList = new LinkedList<>();
+    private LinkedList<OperatorElement> preProcessingElements = new LinkedList<>();
+    private LinkedList<OperatorElement> multiplicationElements = new LinkedList<>();
     int counter = -999;
 
 
@@ -23,8 +23,9 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
         inputEquationModel = operatorEquationModel.getInput();
         inputModel = getModel(InputModel.class);
         buildInputProcessing();
-        buildInputAndSupplementaryConnections();
-        equation.setEquationElements(operatorsList);
+        buildSupplSignalsProcessing();
+        equation.setPreProcessingElements(preProcessingElements);
+        equation.setMultiplicationElements(multiplicationElements);
         return equation;
     }
 
@@ -43,34 +44,34 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
                         OperatorElement processingElement = new OperatorElement();
                         processingElement.addAllInConnections(element.getOutConnections());
                         processingElement.setType(ElementsType.F);
-                        operatorsList.add(processingElement);
+                        preProcessingElements.add(processingElement);
                     }
                 } else if (element != last) {
                     if (index == 1) {
-                        OperatorElement processingElement = operatorsList.get(0);
+                        OperatorElement processingElement = preProcessingElements.get(0);
                         processingElement.addAllInConnections(element.getOutConnections());
-                        addFilterH(processingElement);
+                        addFilterH(processingElement, preProcessingElements );
                     } else {
                         //TODO functionality when element is normal
                     }
                 } else if (element == last) {
                     if (index == 1) {
                         //TODO functionality when element is last and second
-                        OperatorElement processingElement = operatorsList.get(0);
+                        OperatorElement processingElement = preProcessingElements.get(0);
                         processingElement.addAllInConnections(element.getOutConnections());
-                        OperatorElement filterH = addFilterH(processingElement);
+                        OperatorElement filterH = addFilterH(processingElement, preProcessingElements);
 
                     }else{
                         OperatorElement processingElement = new OperatorElement();
                         processingElement.setType(ElementsType.F);
-                        bindElements(operatorsList.getLast(), processingElement);
-                        operatorsList.add(processingElement);
-                        OperatorElement filterH = addFilterH(processingElement);
+                        bindElements(preProcessingElements.getLast(), processingElement);
+                        preProcessingElements.add(processingElement);
+                        OperatorElement filterH = addFilterH(processingElement, preProcessingElements);
                         processingElement.addAllInConnections(element.getOutConnections());
                     }
                         //TODO functionality when element is last
-                        OperatorElement processingElement = operatorsList.getLast();
-                        OperatorElement tElement = addTElement(processingElement);
+                        OperatorElement processingElement = preProcessingElements.getLast();
+                        OperatorElement tElement = addTElement(processingElement, preProcessingElements);
 
                 }
             }
@@ -80,19 +81,34 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
         }
     }
 
+    private void buildSupplSignalsProcessing() {
+        LinkedList<OperatorElement> supplSignals = inputEquationModel.getSubListByType(ElementsType.SUPPLEMENTARY_SIGNALS);
+        OperatorElement tElement = preProcessingElements.getLast();
+        for (OperatorElement e: supplSignals ){
+            OperatorElement f = addFElement(tElement, multiplicationElements);
+            bindElements(e, f);
+        }
+    }
 
-    private OperatorElement addFilterH(OperatorElement element) {
+    private OperatorElement addFilterH(OperatorElement element, LinkedList<OperatorElement> operatorsList) {
         OperatorElement filterH = createBindedElement(element);
         filterH.setType(ElementsType.FILTER_H);
         operatorsList.add(filterH);
         return filterH;
     }
 
-    private OperatorElement addTElement(OperatorElement element){
+    private OperatorElement addTElement(OperatorElement element, LinkedList<OperatorElement> operatorsList){
         OperatorElement tElement = createBindedElement(element);
         tElement.setType(ElementsType.T);
         operatorsList.add(tElement);
         return tElement;
+    }
+
+    private OperatorElement addFElement(OperatorElement element, LinkedList<OperatorElement> operatorsList){
+        OperatorElement fElement = createBindedElement(element);
+        fElement.setType(ElementsType.F);
+        operatorsList.add(fElement);
+        return fElement;
     }
 
     private OperatorElement createBindedElement(OperatorElement element){
@@ -108,12 +124,5 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
         out.addOutConnection(connection);
         in.addInConnection(connection);
     }
-
-
-
-    private void buildInputAndSupplementaryConnections() {
-
-    }
-
 
 }
