@@ -42,4 +42,26 @@ public class CorrespondenceTable {
         supplementarySignals.add(new SimpleIntegerProperty(0));
         supplementarySignals.add(new SimpleIntegerProperty(1));
     }
+
+    public LinkedHashSet<IntegerProperty> getSupplementarySignals() {
+        return supplementarySignals;
+    }
+
+    public CellsCalculatedValue getDeltaValue() {
+        return deltaValue;
+    }
+
+    public boolean isT(){
+        boolean e1 = false;
+        boolean e2 = false;
+        for(CorrespondenceTableRow row: correspondenceTableRows){
+            if(row.getSignalValues().getFirst().getValue()==1){
+                e1 =true;
+            };
+            if(row.getSignalValues().getLast().getValue()==1){
+                e2 =true;
+            };
+        }
+        return e1 && e2;
+    }
 }

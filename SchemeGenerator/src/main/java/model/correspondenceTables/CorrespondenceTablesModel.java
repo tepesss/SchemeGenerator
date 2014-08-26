@@ -23,4 +23,14 @@ public class CorrespondenceTablesModel  extends BaseModel {
             }
         }
     }
+
+    public LinkedList<CorrespondenceTable> getTablesWithT(){
+        LinkedList<CorrespondenceTable> list = new LinkedList<>();
+        for (CorrespondenceTable table : correspondenceTables){
+            if(table.isT()){
+                list.add(table);
+            }
+        }
+        return list;
+    }
 }

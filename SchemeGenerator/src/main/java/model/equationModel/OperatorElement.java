@@ -15,6 +15,12 @@ public class OperatorElement {
     private List<IntegerProperty> outConnections = new ArrayList<>();
     private Object value;
 
+    public OperatorElement(ElementsType type) {
+        this.type = type;
+    }
+    public OperatorElement() {
+    }
+
     public ElementsType getType() {
         return type;
     }

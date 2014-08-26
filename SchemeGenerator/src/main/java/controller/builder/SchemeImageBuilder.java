@@ -76,7 +76,8 @@ public class SchemeImageBuilder {
 
     private void drawOperators() {
         double xPos = drawPreProcessingOperators();
-        drawMultiplicationOperators(xPos + CommonValues.LOGICAL_ELEMENT_WIDTH);
+        xPos = drawMultiplicationOperators(xPos + CommonValues.LOGICAL_ELEMENT_WIDTH);
+        drawPreOutputOperators(xPos + CommonValues.LOGICAL_ELEMENT_WIDTH);
     }
 
     private double drawPreProcessingOperators(){
@@ -94,11 +95,26 @@ public class SchemeImageBuilder {
         return elementsList.getLast().getX();
     }
 
-    private void drawMultiplicationOperators(double lastElementXPosition){
-        double x = lastElementXPosition+CommonValues.LOGICAL_ELEMENT_WIDTH*3;
+    private double drawMultiplicationOperators(double lastElementXPosition){
+        double x = lastElementXPosition+CommonValues.LOGICAL_ELEMENT_WIDTH*2;
         double y = Y_START;
         OperatorEquation operator = equation.getOperator();
         LinkedList<OperatorElementWrapper> elementsList = wrapElements(operator.getMultiplicationElements());
+        for (OperatorElementWrapper elementWrapper: elementsList){
+            elementWrapper.setX(x);
+            elementWrapper.setY(y);
+            drawer.drawOperatorElement(elementWrapper);
+            drawnElements.add(elementWrapper);
+            y+=50;
+        }
+        return elementsList.getLast().getX();
+    }
+
+    private void drawPreOutputOperators(double lastElementXPosition){
+        double x = lastElementXPosition+CommonValues.LOGICAL_ELEMENT_WIDTH*2;
+        double y = Y_START;
+        OperatorEquation operator = equation.getOperator();
+        LinkedList<OperatorElementWrapper> elementsList = wrapElements(operator.getPreOutputElements());
         for (OperatorElementWrapper elementWrapper: elementsList){
             elementWrapper.setX(x);
             elementWrapper.setY(y);

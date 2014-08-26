@@ -10,6 +10,7 @@ public class OperatorEquation {
     LinkedList<OperatorElement> equationElements = new LinkedList<>();
     LinkedList<OperatorElement> preProcessingElements = new LinkedList<>();
     LinkedList<OperatorElement> multiplicationElements = new LinkedList<>();
+    LinkedList<OperatorElement> preOutputElements = new LinkedList<>();
 
 
     public LinkedList<OperatorElement> getPreProcessingElements() {
@@ -30,5 +31,13 @@ public class OperatorEquation {
 
     public void setMultiplicationElements(LinkedList<OperatorElement> equationElements) {
         this.multiplicationElements = equationElements;
+    }
+
+    public LinkedList<OperatorElement> getPreOutputElements() {
+        return preOutputElements;
+    }
+
+    public void setPreOutputElements(LinkedList<OperatorElement> preOutputElements) {
+        this.preOutputElements = preOutputElements;
     }
 }

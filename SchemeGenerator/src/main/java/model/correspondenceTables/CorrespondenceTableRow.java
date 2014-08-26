@@ -51,4 +51,9 @@ public class CorrespondenceTableRow {
             }
         }
     }
+
+    public LinkedList<IntegerProperty> getSignalValues() {
+        return signalValues;
+    }
+
 }
