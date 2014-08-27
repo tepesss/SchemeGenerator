@@ -11,6 +11,7 @@ public class OperatorEquation {
     LinkedList<OperatorElement> preProcessingElements = new LinkedList<>();
     LinkedList<OperatorElement> multiplicationElements = new LinkedList<>();
     LinkedList<OperatorElement> preOutputElements = new LinkedList<>();
+    LinkedList<OperatorElement> filteringElements = new LinkedList<>();
 
 
     public LinkedList<OperatorElement> getPreProcessingElements() {
@@ -40,4 +41,13 @@ public class OperatorEquation {
     public void setPreOutputElements(LinkedList<OperatorElement> preOutputElements) {
         this.preOutputElements = preOutputElements;
     }
+
+    public LinkedList<OperatorElement> getFilteringElements() {
+        return filteringElements;
+    }
+
+    public void setFilteringElements(LinkedList<OperatorElement> filteringElements) {
+        this.filteringElements = filteringElements;
+    }
+
 }

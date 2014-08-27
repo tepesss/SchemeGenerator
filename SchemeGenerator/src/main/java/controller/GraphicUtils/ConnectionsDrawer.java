@@ -2,6 +2,7 @@ package controller.GraphicUtils;
 
 import controller.GraphicUtils.ConnectionStrategy.NoObstacleStrategy;
 import controller.GraphicUtils.ConnectionStrategy.ObstacleStrategy;
+import controller.GraphicUtils.ConnectionStrategy.RetrospectionStrategy;
 import controller.GraphicUtils.ConnectionStrategy.StraightStrategy;
 import controller.utils.Utils;
 import javafx.scene.canvas.GraphicsContext;
@@ -32,16 +33,18 @@ public class ConnectionsDrawer {
         if(out.getY() == in.getY()){
             startPoint = Utils.getOutPoint(out);
             endPoint = Utils.getInPoint(in);
-        }else if(out.getX() == in.getX()){
+        }
+        /*else if(out.getX() == in.getX()){
             // []
             // |
             // []
             if (out.getY()>in.getY()){
-                startPoint = Utils.getBottomPoint(out);
-                endPoint  = Utils.getTopPoint(in);
-            }else{
                 startPoint = Utils.getTopPoint(out);
                 endPoint  = Utils.getBottomPoint(in);
+
+            }else{
+                startPoint = Utils.getBottomPoint(out);
+                endPoint  = Utils.getTopPoint(in);
             }
 
         // []-
@@ -54,7 +57,8 @@ public class ConnectionsDrawer {
         //    ---------
         //            |
         //         []--
-        }else if(out.getX() > in.getX() && out.getY() != in.getY()){
+        }*/
+        else if(out.getX() >= in.getX() && out.getY() != in.getY()){
             startPoint = Utils.getOutPoint(out);
             endPoint = Utils.getInPoint(in);
         }else{
@@ -72,6 +76,8 @@ public class ConnectionsDrawer {
             }else{
                 linesList.addAll(new StraightStrategy().getLinesList(start, end, gc));
             }
+        } else if (start.getX() >= end.getX()){
+            linesList.addAll(new RetrospectionStrategy().getLinesListWithShifts(start, end, gc, linesList));
         } else if (!isLineOverlapping(start, end)) {
             linesList.addAll(new NoObstacleStrategy().getLinesListWithShifts(start, end, gc, linesList));
         }else if(isLineOverlapping(start, end)){

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Volodymyr_Kychak on 7/25/14.
  */
-public class InputEquationBuilder extends AbstractEquationBuilder {
+public class InputEquationBuilder extends BaseEquationBuilder {
     private LinkedList<OperatorElement> operatorList = new LinkedList<>();
     private int counter;
 

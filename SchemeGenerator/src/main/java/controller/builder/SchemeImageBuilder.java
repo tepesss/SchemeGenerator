@@ -47,8 +47,8 @@ public class SchemeImageBuilder {
 
     private void drawEquation() {
         drawInputs();
-        drawOperators();
-        drawOutputs();
+        double xPos = drawOperators();
+        drawOutputs(xPos);
         drawConnections();
     }
 
@@ -74,10 +74,11 @@ public class SchemeImageBuilder {
         return list;
     }
 
-    private void drawOperators() {
+    private double drawOperators() {
         double xPos = drawPreProcessingOperators();
         xPos = drawMultiplicationOperators(xPos + CommonValues.LOGICAL_ELEMENT_WIDTH);
-        drawPreOutputOperators(xPos + CommonValues.LOGICAL_ELEMENT_WIDTH);
+        xPos = drawPreOutputOperators(xPos + CommonValues.LOGICAL_ELEMENT_WIDTH);
+        return drawFilteringOperators(xPos + CommonValues.LOGICAL_ELEMENT_WIDTH);
     }
 
     private double drawPreProcessingOperators(){
@@ -110,8 +111,8 @@ public class SchemeImageBuilder {
         return elementsList.getLast().getX();
     }
 
-    private void drawPreOutputOperators(double lastElementXPosition){
-        double x = lastElementXPosition+CommonValues.LOGICAL_ELEMENT_WIDTH*2;
+    private double drawPreOutputOperators(double lastElementXPosition){
+        double x = lastElementXPosition+CommonValues.LOGICAL_ELEMENT_WIDTH*3;
         double y = Y_START;
         OperatorEquation operator = equation.getOperator();
         LinkedList<OperatorElementWrapper> elementsList = wrapElements(operator.getPreOutputElements());
@@ -122,10 +123,57 @@ public class SchemeImageBuilder {
             drawnElements.add(elementWrapper);
             y+=50;
         }
+        return elementsList.getLast().getX();
     }
 
-    private void drawOutputs() {
+    private double drawFilteringOperators(double lastElementXPosition){
+        double x = lastElementXPosition+CommonValues.LOGICAL_ELEMENT_WIDTH*3;
+        double y = Y_START;
+        OperatorEquation operator = equation.getOperator();
+        LinkedList<OperatorElementWrapper> elementsList = wrapElements(operator.getFilteringElements());
+        for (OperatorElementWrapper elementWrapper: elementsList){
+            elementWrapper.setX(x);
+            elementWrapper.setY(y);
+            drawer.drawOperatorElement(elementWrapper);
+            drawnElements.add(elementWrapper);
+            y+=50;
+        }
+        return elementsList.getLast().getX();
+    }
+
+    private double drawOutputs(double lastElementXPosition) {
+        double xPos = drawaElements(lastElementXPosition);
+        return drawOutputSignals(xPos);
+    }
+
+    private double drawaElements(double lastElementXPosition){
         OutputEquation output = equation.getOutput();
+        double x = lastElementXPosition+CommonValues.LOGICAL_ELEMENT_WIDTH*3;
+        double y = Y_START;
+        LinkedList<OperatorElementWrapper> elementsList = wrapElements(output.getaElements());
+        for (OperatorElementWrapper elementWrapper: elementsList){
+            elementWrapper.setX(x);
+            elementWrapper.setY(y);
+            drawer.drawOperatorElement(elementWrapper);
+            drawnElements.add(elementWrapper);
+            y+=50;
+        }
+        return elementsList.getLast().getX();
+    }
+
+    private double drawOutputSignals(double lastElementXPosition){
+        OutputEquation output = equation.getOutput();
+        double x = lastElementXPosition+CommonValues.LOGICAL_ELEMENT_WIDTH*1.75;
+        double y = Y_START;
+        LinkedList<OperatorElementWrapper> elementsList = wrapElements(output.getOutputs());
+        for (OperatorElementWrapper elementWrapper: elementsList){
+            elementWrapper.setX(x);
+            elementWrapper.setY(y);
+            drawer.drawOperatorElement(elementWrapper);
+            drawnElements.add(elementWrapper);
+            y+=50;
+        }
+        return elementsList.getLast().getX();
     }
 
 

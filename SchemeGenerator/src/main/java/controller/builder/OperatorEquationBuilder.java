@@ -1,6 +1,5 @@
 package controller.builder;
 
-import controller.GraphicUtils.OperatorElementWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.correspondenceTables.CorrespondenceTable;
 import model.correspondenceTables.CorrespondenceTablesModel;
@@ -12,14 +11,15 @@ import java.util.LinkedList;
 /**
  * Created by Volodymyr_Kychak on 7/25/14.
  */
-public class OperatorEquationBuilder extends AbstractEquationBuilder {
+public class OperatorEquationBuilder extends BaseEquationBuilder {
     private InputModel inputModel;
     private InputEquation inputEquationModel;
     private OperatorEquation equation;
     private LinkedList<OperatorElement> preProcessingElements = new LinkedList<>();
     private LinkedList<OperatorElement> multiplicationElements = new LinkedList<>();
     private LinkedList<OperatorElement> preOutputElements = new LinkedList<>();
-    int counter = -999;
+    private LinkedList<OperatorElement> filteringElements = new LinkedList<>();
+
 
 
     public OperatorEquation build(OperatorEquationModel operatorEquationModel) {
@@ -32,13 +32,14 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
         equation.setPreProcessingElements(preProcessingElements);
         equation.setMultiplicationElements(multiplicationElements);
         equation.setPreOutputElements(preOutputElements);
+        equation.setFilteringElements(filteringElements);
         return equation;
     }
 
     private void buildInputProcessing() {
         counter = inputEquationModel.getOperatorElements().size();
         LinkedList<OperatorElement> inputSignals = inputEquationModel.getSubListByType(ElementsType.INPUT_SIGNALS);
-        if (!inputModel.isIndefinitelyDependent()) {
+        //if (!inputModel.isIndefinitelyDependent()) {
             OperatorElement first = inputSignals.getFirst();
             OperatorElement last = inputSignals.getLast();
             for (OperatorElement element : inputSignals) {
@@ -47,14 +48,29 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
                     if (element == last) {
                         //TODO single input SIGNAL create logic connected to "HI"
                     } else {
-                        OperatorElement processingElement = new OperatorElement();
-                        processingElement.addAllInConnections(element.getOutConnections());
-                        processingElement.setType(ElementsType.F);
-                        preProcessingElements.add(processingElement);
+                        if (inputModel.isIndefinitelyDependent()) {
+                            OperatorElement tElement = new OperatorElement();
+                            tElement.addAllInConnections(element.getOutConnections());
+                            tElement.setType(ElementsType.T);
+                            OperatorElement processingElement = new OperatorElement();
+                            processingElement.addAllInConnections(element.getOutConnections());
+                            //not an error
+                            bindElements(tElement, processingElement);
+                            bindElements(tElement, processingElement);
+                            processingElement.setType(ElementsType.F);
+                            preProcessingElements.add(tElement);
+                            preProcessingElements.add(processingElement);
+                        }else{
+                            OperatorElement processingElement = new OperatorElement();
+                            processingElement.addAllInConnections(element.getOutConnections());
+                            processingElement.setType(ElementsType.F);
+                            preProcessingElements.add(processingElement);
+                        }
+
                     }
                 } else if (element != last) {
                     if (index == 1) {
-                        OperatorElement processingElement = preProcessingElements.get(0);
+                        OperatorElement processingElement = preProcessingElements.getLast();
                         processingElement.addAllInConnections(element.getOutConnections());
                         addFilterH(processingElement, preProcessingElements);
                     } else {
@@ -63,7 +79,12 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
                 } else if (element == last) {
                     if (index == 1) {
                         //TODO functionality when element is last and second
-                        OperatorElement processingElement = preProcessingElements.get(0);
+                        if (inputModel.isIndefinitelyDependent()) {
+                            OperatorElement processingElement = preProcessingElements.getLast();
+
+                            OperatorElement f = addFElement(processingElement, preProcessingElements);
+                        }
+                        OperatorElement processingElement = preProcessingElements.getLast();
                         processingElement.addAllInConnections(element.getOutConnections());
                         OperatorElement filterH = addFilterH(processingElement, preProcessingElements);
 
@@ -82,9 +103,9 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
                 }
             }
 
-        } else {
+        /*} else {
             //TODO should contain logic for Indefinitely dependent
-        }
+        }*/
     }
 
     private void buildSupplSignalsProcessing() {
@@ -99,6 +120,11 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
     private void buildPreOutputProcessing() {
         CorrespondenceTablesModel correspondenceTablesModel = getModel(CorrespondenceTablesModel.class);
         LinkedList<CorrespondenceTable> tables = correspondenceTablesModel.getTablesWithT();
+        OperatorElement aElement = new OperatorElement(ElementsType.A);
+        OperatorElement f_RElement_0 = new OperatorElement(ElementsType.FILTER_R);
+        bindElements(aElement, f_RElement_0);
+        filteringElements.add(f_RElement_0);
+        preOutputElements.add(aElement);
         for (OperatorElement element : multiplicationElements) {
             LinkedList<OperatorElement> supplOp = findConnectedElements(element, inputEquationModel.getSubListByType(ElementsType.SUPPLEMENTARY_SIGNALS));
 
@@ -107,9 +133,14 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
                     if (!supplOp.isEmpty() && table.getDeltaValue().equals(supplOp.get(0).getValue())) {
                         OperatorElement tElement = new OperatorElement(ElementsType.T);
                         bindElements(element, tElement);
+                        bindElements(tElement, aElement);
+                        OperatorElement f_RElement_1 = new OperatorElement(ElementsType.FILTER_R);
+                        bindElements(tElement, f_RElement_1);
+                        filteringElements.add(f_RElement_1);
                         preOutputElements.add(tElement);
+                    }else{
+                        bindElements(element, aElement);
                     }
-                    // table.getDeltaValue().equals()
                 }
             }
         }
@@ -136,18 +167,8 @@ public class OperatorEquationBuilder extends AbstractEquationBuilder {
         return fElement;
     }
 
-    private OperatorElement createBindedElement(OperatorElement element) {
-        SimpleIntegerProperty connection = new SimpleIntegerProperty(++counter);
-        element.addOutConnection(connection);
-        OperatorElement resultElement = new OperatorElement();
-        resultElement.addInConnection(connection);
-        return resultElement;
-    }
 
-    private void bindElements(OperatorElement out, OperatorElement in) {
-        SimpleIntegerProperty connection = new SimpleIntegerProperty(++counter);
-        out.addOutConnection(connection);
-        in.addInConnection(connection);
-    }
+
+
 
 }
